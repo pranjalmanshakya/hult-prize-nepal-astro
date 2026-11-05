@@ -38,8 +38,10 @@ export const presence = [
   { city: 'Pokhara', x: 48, y: 50 },    // Gandaki
   { city: 'Biratnagar', x: 85, y: 88 }, // Koshi, southern Terai
   { city: 'Hetauda', x: 61, y: 72 },    // Bagmati, south of Kathmandu
-  { city: 'Mechi', x: 95, y: 76 },      // far east (Jhapa / Ilam)
+  { city: 'Mechi Multiple Campus', x: 95, y: 83, align: 'right above' }, // Bhadrapur, Jhapa (far south-east)
   { city: 'Madesh', x: 71, y: 83 },     // Madhesh Province (Janakpur)
+  { city: 'Far Western University', x: 6, y: 40, align: 'left' }, // Bhimdatta (Mahendranagar), Kanchanpur
+  // align: labels near the map edge hang to one side so they stay on screen
 ];
 
 export const globalHistory = [
