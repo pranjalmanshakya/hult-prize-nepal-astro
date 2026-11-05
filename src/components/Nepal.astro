@@ -28,7 +28,7 @@ const action = [
     <div class="action">
       {action.map(([img, cap], i) => (
         <figure class={`reveal d${i}`}>
-          <Image src={photo(img)} alt={cap} widths={[480, 900]} sizes="(max-width: 640px) 100vw, 33vw" />
+          <Image src={photo(img)} alt={cap} widths={[480, 900]} sizes="(max-width: 640px) 100vw, 33vw" quality={95} />
           <figcaption>{cap}</figcaption>
         </figure>
       ))}

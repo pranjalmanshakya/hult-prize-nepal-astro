@@ -5,7 +5,10 @@ export const season = {
   name: '2026–27',
   challenge: 'Unlimited',
   nationals: 'Last week of April 2027',
-  qualifiersClose: '2027-02-28T23:59:59+05:45',
+  // Qualifier rounds must finish before 15 February 2027 (countdown ends at the close of 14 Feb, Nepal time)
+  qualifiersClose: '2027-02-14T23:59:59+05:45',
+  qualifiersCloseLabel: '15 February 2027',
+  cdDeadline: '13 November 2026',
   register: 'https://www.hultprize.org/apply-now',
   official: 'https://www.hultprize.org',
   instagram: 'https://www.instagram.com/hultprizenepal/',
@@ -29,14 +32,14 @@ export const nepalStats = [
   { n: 500, suffix: '+', label: 'media appearances' },
 ];
 
+// Map pins: x/y are percentages of public/brand/nepal-map.png (703x407), placed by real geography.
 export const presence = [
-  { city: 'Kathmandu', x: 67, y: 60 },
-  { city: 'Pokhara', x: 46, y: 45 },
-  { city: 'Dharan', x: 87, y: 84 },
-  { city: 'Birgunj', x: 61, y: 84 },
-  { city: 'Chitwan', x: 53, y: 70 },
-  { city: 'Rupandehi', x: 31, y: 72 },
-  { city: 'Kanchanpur', x: 7, y: 42 },
+  { city: 'Kathmandu', x: 66, y: 60 },  // Bagmati, centre of the Valley
+  { city: 'Pokhara', x: 48, y: 50 },    // Gandaki
+  { city: 'Biratnagar', x: 85, y: 88 }, // Koshi, southern Terai
+  { city: 'Hetauda', x: 61, y: 72 },    // Bagmati, south of Kathmandu
+  { city: 'Mechi', x: 95, y: 76 },      // far east (Jhapa / Ilam)
+  { city: 'Madesh', x: 71, y: 83 },     // Madhesh Province (Janakpur)
 ];
 
 export const globalHistory = [
@@ -74,7 +77,7 @@ export const sdgs = [
 ];
 
 export const journey = [
-  { n: '01', when: 'Sep 2026 – Feb 2027', title: 'Qualifiers', text: "Win your campus's OnCampus Program, or apply through the online Open Application and pass two online reviews.", now: true },
+  { n: '01', when: 'Sep 2026 – before 15 Feb 2027', title: 'Qualifiers', text: "Win your campus's OnCampus Program, or apply through the online Open Application and pass two online reviews.", now: true },
   { n: '02', when: 'Last week of April 2027', title: 'Nepal Nationals', text: 'Qualified teams from across Nepal pitch at the National Competition. The winner represents Nepal.' },
   { n: '03', when: 'Jun – Jul 2027', title: 'Digital Incubator', text: 'National winners and top online applicants get world-class mentors to validate their market and build a proof of concept.' },
   { n: '04', when: 'Aug 2027', title: 'Global Accelerator', text: 'Selected teams spend a month of intensive mentoring at Ashridge House, outside London.' },
@@ -95,6 +98,8 @@ export const story = [
 export const team = [
   { badge: 'NC', role: 'National Coordinator 2027', name: 'Lakki Thapa', email: 'lakkithaapa8@gmail.com', photo: 'nc-lakki-thapa' },
   { badge: 'NCC', role: 'National Community Coordinator 2027', name: 'Pranjal Man Shakya', email: 'pranjal.m.shakya@gmail.com', photo: 'ncc-pranjal-shakya' },
+  // Photo coming: save it as src/assets/photos/dnc-siddhartha-ghimire.jpg and set photo: 'dnc-siddhartha-ghimire'. Add email when known.
+  { badge: 'DNC', role: 'Deputy National Coordinator 2027', name: 'Siddhartha Krishna Ghimire', email: '', photo: '' },
 ];
 
 export const pastLeadership = [
@@ -102,9 +107,9 @@ export const pastLeadership = [
   { season: '2024 – 2025 seasons', people: [['Subi Kafle', 'Country Coordinator'], ['Garima Shrestha', 'National Community Leader']], note: 'Built a 16-member core committee. 2025 Nationals with AIESEC Nepal: 48 teams. Champion: Team Vayudristi.' },
 ];
 
-export const champions = [
-  { y: 2026, team: 'Team Fluxelle', college: 'Khwopa College of Engineering, Bhaktapur', text: 'Turns discarded coffee waste into organic, edible mushrooms: a circular-economy business for SDG 12.', meta: ['46 teams', '160+ students', '14 judges', "St. Xavier's, Jawalakhel"] },
-  { y: 2025, team: 'Team Vayudristi', college: 'Saraswati Multiple Campus', text: 'AI that monitors and forecasts air quality, built on 30 years of environmental data, for SDGs 3 and 11.', meta: ['48 teams', '148 students', 'AITM College, Lalitpur'], alt: true },
+export const champions: { y: number; team: string; college: string; text: string; sdg: string; meta: string[]; alt?: boolean; global?: string }[] = [
+  { y: 2025, team: 'Team Vayudristi', college: 'Saraswati Multiple Campus', text: 'AI that monitors and forecasts air quality, built on 30 years of environmental data.', sdg: 'SDGs 3 & 11', meta: ['48 teams', '148 students', 'AITM College, Lalitpur'], alt: true, global: 'Represented Nepal at the Global Accelerator' },
+  { y: 2026, team: 'Team Fluxelle', college: 'Khwopa College of Engineering, Bhaktapur', text: 'Turns discarded coffee waste into organic, edible mushrooms: a circular-economy business.', sdg: 'SDG 12', meta: ['46 teams', '160+ students', '14 judges', "St. Xavier's, Jawalakhel"] },
 ];
 
 export const campusCards = [
@@ -152,7 +157,7 @@ export const faqs = [
   ['Can team members come from different colleges?', 'Yes, but the team represents one college. Every member must be enrolled in a degree program and be 18 or over by 28 February 2027.'],
   ['What if my college has no OnCampus Program?', 'Apply through the Open Application at hultprize.org and pass the online review rounds, or ask your college to host one. We will help them set it up.'],
   ['What do national winners get?', 'National recognition, workshops with mentors and industry experts, and a place in the Hult Prize Digital Incubator, with a shot at the UK Accelerator and the Global Finals.'],
-  ['How do I become a Campus Director?', 'Campus Directors for 2026–27 are being appointed now. Email the National Coordinator or follow @hultprizenepal for the call.'],
+  ['How do I become a Campus Director?', 'Campus Director registration for 2026–27 closes on 13 November 2026. Email the National Coordinator or follow @hultprizenepal for the call.'],
 ];
 
 export const sources: [string, string][] = [

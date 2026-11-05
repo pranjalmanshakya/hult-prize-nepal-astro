@@ -12,11 +12,11 @@ const orbit = [1, 4, 7, 13, 3, 6];
   <div class="orb o2" aria-hidden="true"></div>
   <canvas id="sparks" aria-hidden="true"></canvas>
   <div class="ring" aria-hidden="true"></div>
-  <div class="orbit" aria-hidden="true">{orbit.map((n, i) => <Image src={sdgIcon(n)} alt="" width={116} height={116} loading="eager" style={`left:${Math.round(Math.cos(i / orbit.length * 6.283) * 196)}px;top:${Math.round(Math.sin(i / orbit.length * 6.283) * 196)}px`} />)}</div>
+  <div class="orbit" aria-hidden="true">{orbit.map((n, i) => <Image src={sdgIcon(n)} alt="" width={232} height={232} quality={95} loading="eager" style={`left:${Math.round(Math.cos(i / orbit.length * 6.283) * 196)}px;top:${Math.round(Math.sin(i / orbit.length * 6.283) * 196)}px`} />)}</div>
   <div class="wrap hero-inner">
-    <div class="season fade"><span class="tag hot">{season.name} Season</span><span class="tag">Challenge: {season.challenge}</span><span class="tag">Nationals · {season.nationals}</span></div>
+    <div class="season fade"><span class="tag hot">{season.name} Season</span><span class="tag">Challenge: {season.challenge}</span><span class="tag">Nationals · {season.nationals}</span><a class="tag hot" href="#host">Campus Director registration closes {season.cdDeadline}</a></div>
     <h1><span class="line"><span>Changing</span></span><span class="line"><span>the world with</span></span><span class="line"><span class="grad">social enterprise</span></span></h1>
-    <p class="lead fade d1">EF Hult Prize Nepal runs the world's largest student startup competition across Nepal. Build a startup that tackles a real problem, win your campus, pitch at Nationals, and you could represent Nepal on the road to <b>US$1,000,000</b>.</p>
+    <p class="lead fade d1">EF Hult Prize Nepal runs the world's largest student startup competition across Nepal. Build a startup that tackles a real problem, win your campus, pitch at Nationals, and you could represent Nepal on the road to <b>$1,000,000 seed funding</b>.</p>
     <div class="hero-cta fade d2">
       <a class="btn btn-primary" href={season.register} target="_blank" rel="noopener">Register your startup <span class="arr">→</span></a>
       <a class="btn btn-glass" href="#host">Bring Hult Prize to your campus</a>
@@ -27,7 +27,7 @@ const orbit = [1, 4, 7, 13, 3, 6];
       <div class="cd-box"><b data-cd="h">—</b><span>Hours</span></div>
       <div class="cd-box"><b data-cd="m">—</b><span>Min</span></div>
       <div class="cd-box"><b data-cd="s">—</b><span>Sec</span></div>
-      <p>left in the qualifier window. OnCampus Grand Finales wrap up by 28 February 2027.</p>
+      <p>left in the qualifier window. Qualifier rounds must be completed before {season.qualifiersCloseLabel}.</p>
     </div>
     <div class="hero-glass fade d4">
       <div><b data-count="550" data-suffix="+">550+</b><span>startups registered in Nepal, 2025–26</span></div>
@@ -40,6 +40,6 @@ const orbit = [1, 4, 7, 13, 3, 6];
 </section>
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">
-    {[0, 1].map(() => ['EF Hult Prize Nepal', 'Challenge: Unlimited', 'US$1,000,000', 'OnCampus Programs', 'Nationals · April 2027', '17 SDGs', '550+ startups', 'Changing the world through social enterprise'].map((w) => <span>{w}</span>))}
+    {[0, 1].map(() => ['EF Hult Prize Nepal', 'Challenge: Unlimited', '$1,000,000 seed funding','OnCampus Programs', 'Nationals · April 2027', '17 SDGs', '550+ startups', 'Changing the world through social enterprise'].map((w) => <span>{w}</span>))}
   </div>
 </div>

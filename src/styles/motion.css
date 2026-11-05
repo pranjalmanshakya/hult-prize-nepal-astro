@@ -71,8 +71,20 @@
 .report div:nth-child(5) { background: linear-gradient(135deg, #3fa62a, #7ad65a); }
 .report div:nth-child(6) { background: linear-gradient(135deg, #3b2a8c, #e8107f); }
 
-/* Team: two cards with spinning gradient frame */
-.people.duo { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 900px; margin-inline: auto; }
+/* Team: compact cards with spinning gradient frame */
+.people.duo { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 860px; margin-inline: auto; gap: 20px; }
+.people.duo .person .info { left: 10px; right: 10px; bottom: 10px; padding: 12px 14px; border-radius: 16px; }
+.people.duo .person .info h3 { font-size: 1.12rem; }
+.people.duo .person .info .r { font-size: .62rem; }
+.people.duo .person .info a { font-size: .74rem; }
+.person .ph-empty { width: 100%; aspect-ratio: 4 / 5; display: grid; place-items: center; background: linear-gradient(135deg, #3b2a8c, #e8107f); font: 900 3.4rem var(--display); color: rgba(255,255,255,.9); }
+
+/* Champions: featured card for the team that represented Nepal globally */
+.champs:has(.featured) { grid-template-columns: minmax(0, 1fr); }
+.champs:has(.featured) .champ:not(.featured) { min-height: 300px; }
+.champ.featured { min-height: 400px; box-shadow: 0 0 0 3px #ffd400, 0 40px 80px -40px rgba(24,24,88,.6); }
+.champ.featured h3 { font-size: clamp(2.4rem, 5vw, 3.8rem); }
+.champ .global-badge { justify-self: start; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 14px; padding: 8px 16px; border-radius: 999px; background: #ffd400; color: #1a0a10; font: 800 .8rem var(--body); letter-spacing: .06em; text-transform: uppercase; box-shadow: 0 10px 24px -10px rgba(255,212,0,.8); }
 .frame-spin { position: relative; border-radius: 32px; padding: 4px; isolation: isolate; overflow: hidden; }
 .frame-spin::before { content: ""; position: absolute; inset: -50%; z-index: -1; background: conic-gradient(from 0deg, #e8107f, #ff7a1a, #ffd400, #7ad65a, #18b5e8, #3b2a8c, #e8107f); animation: spin 6s linear infinite; }
 .frame-spin .person { border-radius: 28px; }
@@ -166,10 +178,12 @@
 @media (max-width: 1080px) {
   .cds-top, .partner-grid { grid-template-columns: minmax(0, 1fr); }
   .cds-grid, .workshops { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .people.duo { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .orbit, .ring { display: none; }
 }
 @media (max-width: 640px) {
-  .people.duo, .cds-grid, .workshops { grid-template-columns: minmax(0, 1fr); }
+  .cds-grid, .workshops { grid-template-columns: minmax(0, 1fr); }
+  .people.duo { grid-template-columns: minmax(0, 1fr); max-width: 320px; }
   .sdgtrack img { width: 72px; height: 72px; }
   .cd-flip { min-height: 220px; }
 }
