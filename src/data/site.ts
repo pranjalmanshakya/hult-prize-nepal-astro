@@ -155,7 +155,7 @@ export const gallery = [
 export const faqs = [
   ['Does it cost anything to enter?', 'No. Registration for the EF Hult Prize at hultprize.org is free.'],
   ['What can we pitch this season?', 'Anything. The 2026–27 challenge is Unlimited: any for-profit startup that creates measurable social impact and serves at least one UN Sustainable Development Goal.'],
-  ['Can team members come from different colleges?', 'Yes, but the team represents one college. Every member must be enrolled in a degree program and be 18 or over by 28 February 2027.'],
+  ['Can team members come from different colleges?', 'Yes, but the team represents one college. Every member must be enrolled in a degree program and be 18 years or older.'],
   ['What if my college has no OnCampus Program?', 'Apply through the Open Application at hultprize.org and pass the online review rounds, or ask your college to host one. We will help them set it up.'],
   ['What do national winners get?', 'National recognition, workshops with mentors and industry experts, and a place in the Hult Prize Digital Incubator, with a shot at the UK Accelerator and the Global Finals.'],
   ['How do I become a Campus Director?', 'Campus Director registration for 2026–27 closes on 13 November 2026. Email the National Coordinator or follow @hultprizenepal for the call.'],
