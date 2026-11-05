@@ -17,7 +17,7 @@ import { team, season } from '../data/site';
     <div class="contacts">
       {team.filter((p) => p.email && p.photo).map((p, i) => (
         <div class={`ct reveal d${i}`}>
-          <Image src={photo(p.photo)} alt="" width={256} height={256} quality={95} />
+          <Image src={photo(p.photo)} alt="" width={256} quality={95} />
           <div><b>{p.name}</b><span>{p.role.replace(' 2027', '')}</span><a href={`mailto:${p.email}`}>{p.email}</a></div>
         </div>
       ))}

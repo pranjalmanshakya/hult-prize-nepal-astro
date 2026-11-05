@@ -98,8 +98,7 @@ export const story = [
 export const team = [
   { badge: 'NC', role: 'National Coordinator 2027', name: 'Lakki Thapa', email: 'lakkithaapa8@gmail.com', photo: 'nc-lakki-thapa' },
   { badge: 'NCC', role: 'National Community Coordinator 2027', name: 'Pranjal Man Shakya', email: 'pranjal.m.shakya@gmail.com', photo: 'ncc-pranjal-shakya' },
-  // Photo coming: save it as src/assets/photos/dnc-siddhartha-ghimire.jpg and set photo: 'dnc-siddhartha-ghimire'. Add email when known.
-  { badge: 'DNC', role: 'Deputy National Coordinator 2027', name: 'Siddhartha Krishna Ghimire', email: '', photo: '' },
+  { badge: 'DNC', role: 'Deputy National Coordinator 2027', name: 'Siddhartha Krishna Ghimire', email: 'ghimiresg45@gmail.com', photo: 'dnc-siddhartha-ghimire' },
 ];
 
 export const pastLeadership = [

@@ -417,7 +417,7 @@ dialog.lb img { max-height: 80vh; width: auto; margin: 0 auto; border-radius: 16
 .contacts { display: grid; gap: 14px; }
 .ct { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; align-items: center; padding: 16px; border-radius: 22px; background: var(--glass); border: 1px solid var(--glass-line); backdrop-filter: blur(14px); transition: transform .3s, background .3s; }
 .ct:hover { transform: translateX(6px); background: rgba(255,255,255,.14); }
-.ct img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 3px solid var(--magenta); }
+.ct img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; object-position: 50% 20%; border: 3px solid var(--magenta); }
 .ct b { display: block; font: 700 1.1rem var(--display); }
 .ct span { display: block; font-size: .8rem; color: #ff8cc2; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
 .ct a { font-size: .9rem; color: rgba(255,255,255,.85); text-decoration: none; word-break: break-all; }
