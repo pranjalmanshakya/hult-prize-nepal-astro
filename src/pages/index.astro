@@ -14,6 +14,12 @@ const left = { d: String(Math.floor(ms / 864e5)), h: pad(Math.floor(ms / 36e5) %
 const latest = [...champions].sort((a, b) => b.y - a.y)[0];
 // The headline is split into words so each one can slide up in turn.
 const headline = [['Changing'], ['the'], ['world'], ['with'], ['social', 'em'], ['enterprise', 'em']];
+// Shown on a small glass card over the poster.
+const keyDates = [
+  [`Before ${season.qualifiersCloseLabel}`, 'Qualifier rounds end'],
+  [season.nationals, 'Nepal National Competition'],
+  ['September 2027', 'Global Finals for US$1,000,000'],
+];
 const ticker = ['EF Hult Prize Nepal', `Challenge: ${season.challenge}`, 'US$1,000,000 seed funding', 'OnCampus Programs', 'Nationals · April 2027', '17 SDGs', '550+ startups', 'Changing the world through social enterprise'];
 ---
 <Base page={pages.home}>
@@ -40,8 +46,14 @@ const ticker = ['EF Hult Prize Nepal', `Challenge: ${season.challenge}`, 'US$1,0
           <p>left in the qualifier window. Qualifier rounds must be completed before {season.qualifiersCloseLabel}.</p>
         </div>
       </div>
+      <div class="hero-visual">
       <div class="hero-art">
         <Image src={brand('art-unlimited')} alt="Poster for the 2026–27 Hult Prize Challenge, Unlimited: pink and orange confetti on a deep purple background" widths={[360, 565]} sizes="(max-width: 960px) 360px, 400px" loading="eager" fetchpriority="high" />
+      </div>
+        <div class="hero-note">
+          <span class="kicker">Key dates</span>
+          <dl>{keyDates.map(([when, what]) => <div><dt>{when}</dt><dd>{what}</dd></div>)}</dl>
+        </div>
       </div>
     </div>
     <div class="hero-facts">

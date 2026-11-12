@@ -8,7 +8,7 @@ const sorted = [...champions].sort((a, b) => b.y - a.y);
 const tones = ['g-volcano', 'g-cotton'];
 ---
 <Base page={pages.champions}>
-  <PageHero page={pages.champions} arch="volcano" kicker="Made in Nepal" lead="The startups that won the Hult Prize Nepal National Competition and carried Nepal's name forward.">
+  <PageHero page={pages.champions} facts={sorted.map((c) => `${c.y}: ${c.team}`)} arch="volcano" kicker="Made in Nepal" lead="The startups that won the Hult Prize Nepal National Competition and carried Nepal's name forward.">
     Our <em>national champions</em>
   </PageHero>
 

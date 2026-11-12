@@ -1,0 +1,97 @@
+/* =========================================================
+   Glass layer
+   A light touch of frosted glass on top of the base design:
+   the header, the panels inside dark sections, and the cards
+   on tinted sections. Glass only reads as glass when there is
+   colour behind it, so dark and tinted sections also get a
+   faint glow in the brand colours.
+
+   It is progressive: the base design in global.css is complete
+   on its own, and the blur is only switched on for browsers
+   that support it. Visitors who ask their device for reduced
+   transparency get the solid version.
+   ========================================================= */
+:root {
+  --glass-dark: rgba(255, 255, 255, .07);       /* panels on Ink */
+  --glass-dark-line: rgba(255, 255, 255, .18);
+  --glass-light: rgba(255, 255, 255, .62);      /* cards on tinted sections */
+  --glass-light-line: rgba(255, 255, 255, .95);
+  --glass-shadow: 0 14px 34px -22px rgba(41, 37, 99, .38);
+  --frost: blur(16px) saturate(1.5);
+}
+
+/* ---------- Colour behind the glass ---------- */
+.sec.soft {
+  background:
+    radial-gradient(42% 60% at 94% 0%, rgba(255, 50, 152, .09), transparent 70%),
+    radial-gradient(38% 58% at 2% 100%, rgba(18, 177, 231, .1), transparent 70%),
+    var(--soft);
+}
+.sec.ink {
+  background:
+    radial-gradient(34% 52% at 90% 8%, rgba(255, 50, 152, .22), transparent 70%),
+    radial-gradient(32% 48% at 4% 98%, rgba(138, 40, 144, .34), transparent 70%),
+    var(--ink);
+}
+
+/* ---------- Key facts in the page hero ---------- */
+.facts { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.facts li { display: inline-flex; align-items: center; gap: 9px; padding: 9px 16px; border-radius: 999px; background: var(--glass-dark); border: 1px solid var(--glass-dark-line); font-size: .9rem; font-weight: 600; color: #fff; }
+.facts li::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--sun); }
+.facts li:nth-child(3n + 2)::before { background: var(--heritage); }
+.facts li:nth-child(3n + 3)::before { background: var(--sky); }
+
+/* ---------- Key dates card over the home poster ---------- */
+.hero-visual { position: relative; }
+.hero-note { position: absolute; left: -64px; top: 8%; width: 236px; display: grid; gap: 12px; padding: 18px 20px; border-radius: 20px; background: rgba(21, 0, 7, .82); border: 1px solid var(--glass-dark-line); box-shadow: 0 24px 50px -24px rgba(0, 0, 0, .7); }
+.hero-note .kicker { color: var(--sun); font-size: .72rem; }
+.hero-note .kicker::before { display: none; }
+.hero-note dl { display: grid; gap: 11px; }
+.hero-note dl div { display: grid; gap: 1px; }
+.hero-note dt { font-size: .95rem; font-weight: 800; line-height: 1.25; }
+.hero-note dd { font-size: .82rem; color: var(--on-dark-muted); }
+.hero-note dl div + div { padding-top: 11px; border-top: 1px solid var(--glass-dark-line); }
+
+/* ---------- Frosted surfaces (only where the browser can blur) ---------- */
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  /* Header: page content shows softly through it while scrolling */
+  header.top { background: rgba(21, 0, 7, .86); -webkit-backdrop-filter: var(--frost); backdrop-filter: var(--frost); margin-bottom: calc(-1 * var(--header-h) - 1px); }
+  /* Every page opens with a dark hero. It now starts behind the header, so the
+     header is glass over the hero's glow instead of sitting on a blank strip. */
+  main > :first-child { padding-top: calc(var(--header-h) + 1px); }
+
+  /* Panels on dark backgrounds */
+  .tag:not(.hot), .countdown-box, .facts li, .btn-light, .sec.ink .card, .pipeline li, .lb-bar button {
+    background-color: var(--glass-dark); border-color: var(--glass-dark-line);
+    -webkit-backdrop-filter: var(--frost); backdrop-filter: var(--frost);
+  }
+  .hero-facts { background: rgba(255, 255, 255, .035); -webkit-backdrop-filter: var(--frost); backdrop-filter: var(--frost); }
+  .hero-note { background: rgba(21, 0, 7, .5); -webkit-backdrop-filter: blur(18px) saturate(1.6); backdrop-filter: blur(18px) saturate(1.6); }
+  dialog.lb::backdrop { background: rgba(21, 0, 7, .78); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+
+  /* Cards on tinted sections */
+  .sec.soft :is(.card, .link-card, .steps li, .numbered li, .benefit-list > div, .framed, .chips li, .panel.line) {
+    background-color: var(--glass-light); border-color: var(--glass-light-line); box-shadow: var(--glass-shadow);
+    -webkit-backdrop-filter: var(--frost); backdrop-filter: var(--frost);
+  }
+}
+
+/* ---------- Solid version for visitors who prefer less transparency ---------- */
+@media (prefers-reduced-transparency: reduce) {
+  header.top { background: var(--ink); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .hero-note { background: var(--ink); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .sec.soft :is(.card, .link-card, .steps li, .numbered li, .benefit-list > div, .framed, .chips li, .panel.line) { background-color: var(--gallery); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+
+/* ---------- Smaller screens ---------- */
+@media (max-width: 1240px) { .hero-note { left: -28px; } }
+/* The open menu is a near-solid sheet, so links stay easy to read over any page */
+@media (max-width: 1120px) { nav.main { background: rgba(21, 0, 7, .97); } }
+@media (max-width: 960px) {
+  .hero-visual { max-width: 360px; }
+  .hero-note { position: static; width: auto; margin-top: 18px; }
+}
+@media (max-width: 640px) {
+  .hero-visual { max-width: 300px; }
+  .facts li { font-size: .84rem; padding: 8px 13px; }
+}

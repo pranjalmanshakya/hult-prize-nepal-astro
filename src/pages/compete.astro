@@ -8,7 +8,7 @@ import { pages } from '../data/pages';
 const tones = ['c-heritage', 'c-sun', 'c-sky', 'c-purple', 'c-midnight'];
 ---
 <Base page={pages.compete}>
-  <PageHero page={pages.compete} arch="cotton" kicker={`Enter the EF Hult Prize ${season.name}`} lead="Build a startup that tackles a real problem, pitch it, and you could represent Nepal on the road to US$1,000,000 in seed funding.">
+  <PageHero page={pages.compete} facts={['Teams of 2 to 4 students', 'Free to register', `Qualifiers end before ${season.qualifiersCloseLabel}`]} arch="cotton" kicker={`Enter the EF Hult Prize ${season.name}`} lead="Build a startup that tackles a real problem, pitch it, and you could represent Nepal on the road to US$1,000,000 in seed funding.">
     How to enter <em>from Nepal</em>
     <Fragment slot="actions">
       <a class="btn btn-primary" href={season.register} target="_blank" rel="noopener">Apply at hultprize.org <span aria-hidden="true">↗</span></a>

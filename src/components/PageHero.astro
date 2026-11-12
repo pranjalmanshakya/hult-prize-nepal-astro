@@ -6,8 +6,10 @@ interface Props {
   lead?: string;
   /** Which brand gradient fills the arch: City Pop (default), Cotton Candy or Tropical Volcano. */
   arch?: 'city' | 'cotton' | 'volcano';
+  /** Two or three key facts, shown as small glass chips under the introduction. */
+  facts?: string[];
 }
-const { page, kicker, lead, arch = 'city' } = Astro.props;
+const { page, kicker, lead, arch = 'city', facts = [] } = Astro.props;
 ---
 <section class="page-hero">
   <div class={`arch${arch === 'city' ? '' : ` ${arch}`}`} aria-hidden="true"></div>
@@ -21,6 +23,7 @@ const { page, kicker, lead, arch = 'city' } = Astro.props;
     <span class="kicker">{kicker}</span>
     <h1><slot /></h1>
     {lead && <p class="lead">{lead}</p>}
+    {facts.length > 0 && <ul class="facts" aria-label="Key facts">{facts.map((fact) => <li>{fact}</li>)}</ul>}
     {Astro.slots.has('actions') && <div class="btn-row"><slot name="actions" /></div>}
   </div>
 </section>

@@ -31,7 +31,7 @@ const forUniversity = [
 ];
 ---
 <Base page={pages.host}>
-  <PageHero page={pages.host} arch="cotton" kicker="For colleges and universities" lead={`Hosting is light on staff time. Your students run the program, and Hult Prize Nepal trains and supports them at every step. Campus Director registration closes on ${season.cdDeadline}.`}>
+  <PageHero page={pages.host} facts={[`Register by ${season.cdDeadline}`, 'Committee of 8 to 15 students', `Finale before ${season.qualifiersCloseLabel}`]} arch="cotton" kicker="For colleges and universities" lead={`Hosting is light on staff time. Your students run the program, and Hult Prize Nepal trains and supports them at every step. Campus Director registration closes on ${season.cdDeadline}.`}>
     Bring the Hult Prize <em>to your campus</em>
     <Fragment slot="actions">
       <a class="btn btn-primary" href={`mailto:${nc.email}?subject=Campus%20Director%202026-27`}>Email the National Coordinator</a>
