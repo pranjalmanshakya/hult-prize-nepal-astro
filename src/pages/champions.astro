@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Explore from '../components/Explore.astro';
+import { champions } from '../data/site';
+import { pages } from '../data/pages';
+const sorted = [...champions].sort((a, b) => b.y - a.y);
+const tones = ['g-volcano', 'g-cotton'];
+---
+<Base page={pages.champions}>
+  <PageHero page={pages.champions} arch="volcano" kicker="Made in Nepal" lead="The startups that won the Hult Prize Nepal National Competition and carried Nepal's name forward.">
+    Our <em>national champions</em>
+  </PageHero>
+
+  <section class="sec">
+    <div class="wrap">
+      {sorted.map((c, i) => (
+        <article class="champ">
+          <div class={`year ${tones[i % tones.length]}`}>
+            <b>{c.y}</b>
+            <span>National Champion · {c.sdg}</span>
+          </div>
+          <div class="body">
+            {c.global && <span class="badge-sun">{c.global}</span>}
+            <h2>{c.team}</h2>
+            <span class="college">{c.college}</span>
+            <p>{c.text}</p>
+            <ul class="chips" aria-label={`${c.y} National Competition`}>{c.meta.map((m) => <li>{m}</li>)}</ul>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="sec soft">
+    <div class="wrap split top">
+      <div class="stack">
+        <span class="kicker">Before Nationals</span>
+        <h2 class="h2">It starts on campus</h2>
+        <p class="lead">Every Hult Prize journey begins with a student-led OnCampus Program. Read how campuses across Nepal run theirs, and who has won them.</p>
+        <div class="btn-row"><a class="btn btn-dark" href={pages.campuses.path}>Campus winners</a></div>
+      </div>
+      <div class="stack">
+        <span class="kicker">After Nationals</span>
+        <h2 class="h2">The road to the Global Finals</h2>
+        <p class="lead">Nepal's winner joins the Hult Prize Digital Incubator, with a shot at the Global Accelerator and the US$1M Global Finals.</p>
+        <div class="btn-row"><a class="btn btn-line" href={`${pages.compete.path}#journey`}>See the five stages</a></div>
+      </div>
+    </div>
+  </section>
+
+  <Explore keys={['nationals', 'campuses', 'about']} />
+</Base>

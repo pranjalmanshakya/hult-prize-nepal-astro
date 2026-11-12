@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Explore from '../components/Explore.astro';
+import { workshops, season } from '../data/site';
+import { pages } from '../data/pages';
+const stats = [
+  ['45+', 'colleges across Nepal', 'c-heritage'],
+  ['50', 'student-led startups', 'c-sun'],
+  ['20+', 'nationally renowned judges', 'c-sky'],
+  ['38', 'Campus Directors', 'c-purple'],
+];
+const pipe = [
+  ['OnCampus Programs', 'Win your campus Grand Finale.'],
+  ['Workshops', 'Business models, pitching, customer discovery and startup finance with entrepreneurs and industry experts.'],
+  ['National Competition', 'Pitch to 20+ judges, investors and ecosystem leaders.'],
+  ['Digital Incubator & beyond', "Nepal's winner joins the Hult Prize Digital Incubator on the road to the Global Finals."],
+];
+---
+<Base page={pages.nationals}>
+  <PageHero page={pages.nationals} arch="volcano" kicker={`The next stage · ${season.nationals}`} lead="Winning teams from OnCampus Programs across the country compete for Nepal's place in the Digital Incubator.">
+    National Competition <em>2027</em>
+  </PageHero>
+
+  <section class="sec">
+    <div class="wrap split top">
+      <div class="stack">
+        <span class="kicker">Qualifying</span>
+        <h2 class="h2">Who participates?</h2>
+        <ul class="checks">
+          <li>All startups that won a local competition on their campus</li>
+          <li>Startups from the Open Application that passed the first online review</li>
+          <li>Every startup must represent a university in Nepal</li>
+        </ul>
+        <p class="muted">New to the competition? Start with <a class="text-link" href={pages.compete.path}>how to enter</a>.</p>
+      </div>
+      <div class="stats two">
+        {stats.map(([n, label, tone]) => <div class={`stat ${tone}`}><b>{n}</b><span>{label}</span></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec soft">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Before the competition</span>
+        <h2 class="h2">Workshops for qualified teams</h2>
+      </div>
+      <div class="grid g3">
+        {workshops.map(([title, text], i) => (
+          <article class="card"><span class="eyebrow">Workshop {String(i + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{text}</p></article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec ink">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">The pathway</span>
+        <h2 class="h2">From campus to the world</h2>
+      </div>
+      <ol class="pipeline">
+        {pipe.map(([title, text]) => <li><b>{title}</b><span>{text}</span></li>)}
+      </ol>
+      <p class="muted small" style="margin-top:24px">See all five stages and their dates on the <a href={`${pages.compete.path}#journey`} style="color:#fff;font-weight:700">compete page</a>.</p>
+    </div>
+  </section>
+
+  <Explore keys={['compete', 'champions', 'partners']} />
+</Base>

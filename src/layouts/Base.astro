@@ -1,42 +1,122 @@
 ---
+import '@fontsource-variable/figtree/wght.css';
 import '../styles/global.css';
 import '../styles/motion.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import type { PageMeta } from '../data/pages';
+import { org } from '../data/site';
+import { organizationSchema, websiteSchema, breadcrumbSchema, webPageSchema, toJsonLd } from '../lib/schema';
 
-interface Props { title?: string; description?: string; nav?: boolean }
-const {
-  title = 'EF Hult Prize Nepal',
-  description = "EF Hult Prize Nepal runs the world's largest student startup competition in Nepal: OnCampus Programs, the National Competition, and the path to US$1M. Season 2026–27: Unlimited.",
-  nav = true,
-} = Astro.props;
+interface Props {
+  /** Title, description and path for this page (see src/data/pages.ts). */
+  page: PageMeta;
+  /** Keep the page out of search results (used by the 404 page). */
+  noindex?: boolean;
+  /** Extra structured-data nodes for this page, such as FAQPage. */
+  schema?: Record<string, unknown>[];
+}
+const { page, noindex = false, schema = [] } = Astro.props;
+const site = Astro.site!;
+const canonical = new URL(page.path, site).href;
+const shareImage = new URL(`/og/${page.slug}.png`, site).href;
+const isHome = page.path === '/';
+const hasBreadcrumb = !isHome && !noindex;
+const graph = noindex
+  ? [organizationSchema(site), websiteSchema(site)]
+  : [
+      organizationSchema(site),
+      websiteSchema(site),
+      webPageSchema(site, page, hasBreadcrumb),
+      ...(hasBreadcrumb ? [breadcrumbSchema(site, page)] : []),
+      ...schema,
+    ];
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <meta name="theme-color" content="#1a0a10" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content="/brand/logo-full-light.png" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" />
-    <script is:inline>document.documentElement.classList.add('js');</script>
+    <title>{page.title}</title>
+    <meta name="description" content={page.description} />
+    {noindex ? <meta name="robots" content="noindex, follow" /> : <link rel="canonical" href={canonical} />}
+    <meta name="theme-color" content="#150007" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={org.name} />
+    <meta property="og:title" content={page.title} />
+    <meta property="og:description" content={page.description} />
+    {!noindex && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={shareImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${page.share.join(' ')}. ${org.alternateName}.`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={page.title} />
+    <meta name="twitter:description" content={page.description} />
+    <meta name="twitter:image" content={shareImage} />
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+    <script type="application/ld+json" is:inline set:html={toJsonLd(graph)} />
+    <!-- Marks the page as script-enabled before first paint, so scroll reveals never flash. If the main script has not started within 3.5 seconds, everything is shown. -->
+    <script is:inline>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__reveal)document.documentElement.classList.remove('js')},3500);</script>
   </head>
   <body>
-    <div class="progress-bar" id="progress"></div>
-    <Header nav={nav} />
-    <main><slot /></main>
+    <a class="skip" href="#main">Skip to content</a>
+    <Header />
+    <main id="main"><slot /></main>
     <Footer />
-    <button class="to-top" id="to-top" aria-label="Back to top">↑</button>
-    <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
     <script>
-      import '../scripts/main.ts';
+      // Scroll reveals and count-up numbers. The selector list matches src/styles/motion.css.
+      const REVEAL = '.sec-head, .split > .stack, .card, .stat, .panel, .person, .champ, .timeline li, .steps li, .numbered li, .pipeline li, .link-card, .photo, .framed, .photo-row figure, .summit, .gallery button, .contact-card, .faq details, .dates > div, .benefit-list > div, .quote, .map, .hero-facts .wrap > div, .cta-band .wrap > *, .ridge';
+      const items = Array.from(document.querySelectorAll<HTMLElement>(REVEAL));
+      const still = matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window);
+
+      // Counts a figure such as "550+" or "2,200" up from zero. The real value is already in the HTML.
+      const countUp = (el: HTMLElement) => {
+        const m = (el.textContent ?? '').match(/^(\D*)(\d[\d,]*)(.*)$/);
+        if (!m) return;
+        const target = Number(m[2].replace(/,/g, ''));
+        if (target < 10) return;
+        const start = performance.now();
+        const step = (now: number) => {
+          const k = Math.min(1, (now - start) / 1500);
+          const eased = 1 - Math.pow(1 - k, 4);
+          el.textContent = m[1] + Math.round(target * eased).toLocaleString('en-US') + m[3];
+          if (k < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      };
+
+      if (still) {
+        items.forEach((el) => el.classList.add('in'));
+      } else {
+        const io = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            io.unobserve(entry.target);
+            reveal(entry.target as HTMLElement);
+          }
+        }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
+        const reveal = (el: HTMLElement) => {
+          el.classList.add('in');
+          if (el.matches('.stat, .hero-facts .wrap > div')) el.querySelectorAll<HTMLElement>('b').forEach(countUp);
+        };
+        for (const el of items) {
+          // Siblings appear one after another.
+          const index = el.parentElement ? Array.prototype.indexOf.call(el.parentElement.children, el) : 0;
+          el.style.setProperty('--d', Math.min(index, 8) * 70 + 'ms');
+          // Anything already on screen is shown straight away; the rest waits for scroll.
+          if (el.getBoundingClientRect().top < innerHeight * 0.95) reveal(el);
+          else io.observe(el);
+        }
+      }
+      (window as unknown as { __reveal: boolean }).__reveal = true;
     </script>
   </body>
 </html>

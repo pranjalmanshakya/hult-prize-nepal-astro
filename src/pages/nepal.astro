@@ -1,0 +1,76 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Explore from '../components/Explore.astro';
+import { brand, photo } from '../lib/img';
+import { nepalStats, presence, story } from '../data/site';
+import { pages } from '../data/pages';
+const tones = ['c-heritage', 'c-midnight', 'c-sun', 'c-sky', 'c-purple', 'c-ink'];
+const action = [
+  ['event-speaker', 'A speaker session for OnCampus teams'],
+  ['event-hall', 'A full hall for an OnCampus session'],
+  ['event-panelists', 'Panelists in conversation at a Hult Prize Nepal event'],
+];
+---
+<Base page={pages.nepal}>
+  <PageHero page={pages.nepal} kicker="Hult Prize in Nepal" lead="Hult Prize Nepal runs the national program. We support OnCampus Programs at colleges across the country and host the National Competition, whose winner represents Nepal globally.">
+    A movement <em>across the country</em>
+  </PageHero>
+
+  <section class="sec">
+    <div class="wrap split">
+      <div class="stack">
+        <span class="kicker">Last season's qualifiers · 2025–26</span>
+        <h2 class="h2">One season in numbers</h2>
+        <div class="stats three">
+          {nepalStats.map((s, i) => <div class={`stat ${tones[i % tones.length]}`}><b>{s.n}{s.suffix}</b><span>{s.label}</span></div>)}
+        </div>
+      </div>
+      <figure class="stack">
+        <div class="map">
+          <Image src={brand('nepal-map')} alt={`Map of Nepal's seven provinces with pins where Hult Prize Nepal is present: ${presence.map((p) => p.city).join(', ')}`} widths={[560, 703]} sizes="(max-width: 960px) 100vw, 560px" loading="eager" />
+          {presence.map((p, i) => <div class={`pin${'align' in p && p.align ? ` ${p.align}` : ''}`} style={`left:${p.x}%;top:${p.y}%;--i:${i}`} aria-hidden="true"><i></i><span>{p.city}</span></div>)}
+        </div>
+        <figcaption class="small muted">Where Hult Prize Nepal is present.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec soft">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">On campus</span>
+        <h2 class="h2">What a season looks like</h2>
+        <p class="lead">Speaker sessions, workshops and finals, run by students at their own colleges. There are more photos in the <a class="text-link" href={pages.gallery.path}>gallery</a>.</p>
+      </div>
+      <div class="photo-row">
+        {action.map(([img, cap]) => (
+          <figure>
+            <Image src={photo(img)} alt={cap} widths={[400, 800]} sizes="(max-width: 640px) 100vw, 33vw" />
+            <figcaption>{cap}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="story">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Our story</span>
+        <h2 class="h2">From two campuses in 2016 to a national program</h2>
+      </div>
+      <ol class="timeline">
+        {story.map((s) => (
+          <li class={s.big ? 'key' : undefined}>
+            <span class="when">{s.y}</span>
+            <div><h3>{s.h}</h3><p>{s.t}</p></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <Explore keys={['team', 'champions', 'campuses']} soft />
+</Base>

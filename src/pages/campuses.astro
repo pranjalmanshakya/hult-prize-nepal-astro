@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Explore from '../components/Explore.astro';
+import { photo } from '../lib/img';
+import { campusCards } from '../data/site';
+import { pages } from '../data/pages';
+---
+<Base page={pages.campuses}>
+  <PageHero page={pages.campuses} kicker="Hult Prize at colleges" lead="Every Hult Prize journey begins with a student-led OnCampus Program. Here is how campuses across Nepal have run theirs, starting with IOE Pulchowk in 2016.">
+    Where it all starts: <em>OnCampus</em>
+    <Fragment slot="actions">
+      <a class="btn btn-primary" href={pages.host.path}>Bring it to your campus</a>
+    </Fragment>
+  </PageHero>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Campus stories</span>
+        <h2 class="h2">Winners from campuses across Nepal</h2>
+      </div>
+      <div class="grid g3">
+        {campusCards.map((c) => (
+          <article class="card">
+            <span class="eyebrow">{c.yr}</span>
+            <h3>{c.h}</h3>
+            <p>{c.p}</p>
+            <a class="text-link small" href={c.src[1]} target="_blank" rel="noopener">Source: {c.src[0]} <span aria-hidden="true">↗</span></a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec soft">
+    <div class="wrap split">
+      <div class="stack">
+        <span class="kicker">Our campus network</span>
+        <h2 class="h2">40+ campuses hosted OnCampus Programs in 2025–26</h2>
+        <p class="lead">From Tribhuvan University's constituent campuses to Little Angels', IMS, Samriddhi, Advanced College of Engineering, Softwarica, AITM, Thames, Rampur Campus, Deerwalk, Cosmos College, Saraswati Multiple Campus, KCM and King's College.</p>
+        <p class="muted">Not on the wall yet? Any college or university in Nepal can host.</p>
+        <div class="btn-row">
+          <a class="btn btn-dark" href={pages.host.path}>How to host a program</a>
+          <a class="btn btn-line" href={pages.contact.path}>Talk to the national team</a>
+        </div>
+      </div>
+      <div class="framed">
+        <Image src={photo('campus-logos-2025-26')} alt="Logos of the colleges that hosted a Hult Prize OnCampus Program in the 2025–26 season" widths={[560, 1120]} sizes="(max-width: 960px) 100vw, 560px" />
+      </div>
+    </div>
+  </section>
+
+  <Explore keys={['host', 'champions', 'nepal']} />
+</Base>

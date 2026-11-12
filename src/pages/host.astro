@@ -1,0 +1,138 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Explore from '../components/Explore.astro';
+import { cdRole, season, team } from '../data/site';
+import { pages } from '../data/pages';
+const nc = team[0];
+const steps = [
+  ['Express interest', 'Contact the national team and we set up a short orientation call.'],
+  ['Register on the platform', 'We guide you through official registration as a recognized OnCampus site.'],
+  ['Form your committee', 'Recruit 8 to 15 motivated students from different departments.'],
+  ['Plan and launch', 'Set your timeline, hold a launch event and open registration.'],
+  ['Run the program', 'Workshops, community events, mock pitches and your Grand Finale, completed before 15 February 2027.'],
+  ['Send your best to Nationals', 'Your winning team joins the National Competition in the last week of April 2027.'],
+];
+const forStudents = [
+  ['Real-world skills', 'Entrepreneurship, teamwork, leadership and pitching.'],
+  ['Training and mentoring', 'SDGs, design thinking, business models and finance.'],
+  ['A path to the world stage', 'Nationals, Digital Incubator, UK Accelerator, US$1M.'],
+  ['Workshops', 'Business models, pitching and startup finance before Nationals.'],
+  ['Recognition', 'Certificates, media exposure and a national stage.'],
+  ['A lifelong network', 'Peers from 45+ colleges and 1M+ Hult Prize alumni.'],
+];
+const forUniversity = [
+  ['A hub for social innovation', 'Known as a college where ideas become ventures.'],
+  ['Learning beyond the classroom', 'Project-based learning tied to the SDGs.'],
+  ['Global visibility', 'Listed as an official OnCampus site on the Hult Prize platform.'],
+  ['Student leadership', '8 to 15 students gain real organizing experience.'],
+  ['New partnerships', 'Industry judges, sponsors, incubators and NGOs.'],
+  ['Your name at Nationals', 'Your winners represent you alongside 40+ campuses.'],
+];
+---
+<Base page={pages.host}>
+  <PageHero page={pages.host} arch="cotton" kicker="For colleges and universities" lead={`Hosting is light on staff time. Your students run the program, and Hult Prize Nepal trains and supports them at every step. Campus Director registration closes on ${season.cdDeadline}.`}>
+    Bring the Hult Prize <em>to your campus</em>
+    <Fragment slot="actions">
+      <a class="btn btn-primary" href={`mailto:${nc.email}?subject=Campus%20Director%202026-27`}>Email the National Coordinator</a>
+      <a class="btn btn-light" href={pages.contact.path}>All contacts</a>
+    </Fragment>
+  </PageHero>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">How hosting works</span>
+        <h2 class="h2">Who does what</h2>
+      </div>
+      <div class="grid g2">
+        <div class="panel c-heritage">
+          <h3>Your students do</h3>
+          <ul class="list">
+            <li>Form an Organizing Committee and appoint a Campus Director</li>
+            <li>Promote the program and register teams</li>
+            <li>Run workshops, mock pitches and the Grand Finale</li>
+            <li>Invite judges, speakers and local partners</li>
+          </ul>
+        </div>
+        <div class="panel c-midnight">
+          <h3>Hult Prize Nepal does</h3>
+          <ul class="list">
+            <li>Registers your campus on the global Hult Prize platform</li>
+            <li>Trains your Organizing Committee</li>
+            <li>Shares templates, workshop material and judging rubrics</li>
+            <li>Runs workshops on business models and pitching for qualified teams</li>
+            <li>Takes your winning team forward to Nationals</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec soft">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Getting started</span>
+        <h2 class="h2">Six steps to launch</h2>
+      </div>
+      <ol class="numbered">
+        {steps.map(([h, p], i) => <li><b class="n" aria-hidden="true">{i + 1}</b><h3>{h}</h3><p>{p}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">The student leader</span>
+        <h2 class="h2">What a Campus Director does</h2>
+        <p class="lead">Campus Directors are the student leaders who bring the Hult Prize to their college. They build the team, run the OnCampus Program and send their best startup to Nationals.</p>
+      </div>
+      <div class="grid g3">
+        {cdRole.map(([h, p]) => <article class="card"><h3>{h}</h3><p>{p}</p></article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec soft">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Why host</span>
+        <h2 class="h2">What your campus gains</h2>
+      </div>
+      <div class="grid g2">
+        <div class="stack">
+          <h3 class="h3">For students</h3>
+          <div class="benefit-list">{forStudents.map(([b, s]) => <div><b>{b}</b><span>{s}</span></div>)}</div>
+        </div>
+        <div class="stack">
+          <h3 class="h3">For your university</h3>
+          <div class="benefit-list">{forUniversity.map(([b, s]) => <div><b>{b}</b><span>{s}</span></div>)}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="grid g2">
+        <div class="panel soft">
+          <h2>Who can host?</h2>
+          <p class="muted">Any college or university in Nepal, of any size or location, across engineering, management, science, arts, law, health and education. You need a group of motivated students, support or at least awareness from the administration, at least one pitching event open to all students, and a commitment to innovation, impact and integrity.</p>
+        </div>
+        <div class="panel line">
+          <h2>Key dates</h2>
+          <ul class="checks">
+            <li>Campus Director registration closes on {season.cdDeadline}</li>
+            <li>Run workshops in December–January</li>
+            <li>Hold your Grand Finale before {season.qualifiersCloseLabel}</li>
+            <li>National Competition: {season.nationals}</li>
+          </ul>
+        </div>
+      </div>
+      <p class="quote">The Hult Prize OnCampus program does not just create competitors. It creates changemakers who carry the spirit of the SDGs beyond the stage.</p>
+    </div>
+  </section>
+
+  <Explore keys={['campuses', 'nationals', 'contact']} soft />
+</Base>
