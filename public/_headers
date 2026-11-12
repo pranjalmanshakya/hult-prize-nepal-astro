@@ -1,0 +1,14 @@
+# Netlify response headers.
+
+# Files in /_astro/ have their content fingerprint in the name, so browsers
+# may keep them for a year without ever re-checking.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# The service worker must always be re-checked, so site updates reach visitors.
+/sw.js
+  Cache-Control: no-cache
+
+/site.webmanifest
+  Content-Type: application/manifest+json; charset=utf-8
+  Cache-Control: no-cache

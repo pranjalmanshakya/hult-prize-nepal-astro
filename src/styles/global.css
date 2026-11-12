@@ -362,6 +362,12 @@ footer.site { background: var(--ink); color: var(--on-dark-muted); padding-block
 .foot a:hover { color: #fff; text-decoration: underline; }
 .foot-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--on-dark-line); font-size: .84rem; }
 
+/* ---------- App extras: install button and offline notice ---------- */
+#install-btn { margin-top: 18px; }
+.net-status { position: fixed; left: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 60; max-width: calc(100vw - 32px); padding: 10px 16px; border-radius: 999px; background: var(--sun); color: var(--ink); font-size: .9rem; font-weight: 700; box-shadow: 0 12px 30px -12px rgba(21, 0, 7, .6); }
+/* Installed app: keep the header clear of the phone's status bar */
+@media (display-mode: standalone) { header.top { padding-top: env(safe-area-inset-top, 0px); } }
+
 /* ---------- 404 ---------- */
 .notfound { background: var(--ink); color: #fff; }
 .notfound .wrap { display: grid; gap: 20px; justify-items: start; padding-block: 96px 110px; }

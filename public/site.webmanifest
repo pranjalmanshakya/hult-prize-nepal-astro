@@ -1,13 +1,32 @@
 {
+  "id": "/",
   "name": "Hult Prize Nepal",
-  "short_name": "Hult Prize Nepal",
-  "description": "The national program of the EF Hult Prize in Nepal.",
+  "short_name": "Hult Nepal",
+  "description": "The national program of the EF Hult Prize in Nepal: how to enter, key dates, OnCampus Programs and the National Competition.",
+  "lang": "en",
+  "dir": "ltr",
   "start_url": "/",
-  "display": "browser",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "any",
   "background_color": "#150007",
   "theme_color": "#150007",
+  "categories": ["education", "business"],
   "icons": [
-    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "How to enter", "short_name": "Compete", "url": "/compete/", "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "The 2026–27 challenge", "short_name": "Challenge", "url": "/challenge/", "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "National Competition 2027", "short_name": "Nationals", "url": "/nationals/", "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Contact the national team", "short_name": "Contact", "url": "/contact/", "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
+  ],
+  "screenshots": [
+    { "src": "/screenshots/home-wide.jpg", "sizes": "1280x720", "type": "image/jpeg", "form_factor": "wide", "label": "Hult Prize Nepal home page" },
+    { "src": "/screenshots/home-narrow.jpg", "sizes": "540x1170", "type": "image/jpeg", "form_factor": "narrow", "label": "Hult Prize Nepal home page on a phone" }
   ]
 }

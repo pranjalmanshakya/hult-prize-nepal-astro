@@ -88,6 +88,10 @@ await writeFile(at('public/favicon.ico'), ico(await Promise.all([16, 32, 48].map
 await writeFile(at('public/icon-192.png'), await icon(192));
 await writeFile(at('public/icon-512.png'), await icon(512));
 await writeFile(at('public/apple-touch-icon.png'), await icon(180, { radius: 0 }));
+// Maskable icons fill the whole square and keep the mark inside the central
+// safe zone, so Android can crop them to a circle or squircle without cutting it.
+await writeFile(at('public/icon-maskable-192.png'), await icon(192, { pad: 0.28, radius: 0 }));
+await writeFile(at('public/icon-maskable-512.png'), await icon(512, { pad: 0.28, radius: 0 }));
 for (const page of allPages) {
   await writeFile(at('public/og', `${page.slug}.png`), await shareImage(page));
   console.log('share image:', page.slug);

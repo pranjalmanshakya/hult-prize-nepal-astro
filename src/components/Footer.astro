@@ -19,6 +19,8 @@ import { pages, footerNav } from '../data/pages';
       <div class="brand">
         <Image src={brand('logo-full-light')} alt="EF Hult Prize Nepal" width={420} loading="lazy" />
         <p>Changing the world through social enterprise. Hult Prize Nepal, {season.name} season.</p>
+        <!-- Shown by the script in Base.astro only when the browser can install the site as an app -->
+        <button class="btn btn-light btn-sm" type="button" id="install-btn" hidden>Install the app</button>
       </div>
       {footerNav.map((col) => (
         <nav aria-label={col.heading}>

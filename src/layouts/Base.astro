@@ -60,6 +60,11 @@ const graph = noindex
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <!-- Lets the site run as an installed app on phones (see site.webmanifest and sw.js) -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content={org.name} />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
     <script type="application/ld+json" is:inline set:html={toJsonLd(graph)} />
@@ -71,6 +76,41 @@ const graph = noindex
     <Header />
     <main id="main"><slot /></main>
     <Footer />
+    <p class="net-status" id="net-status" role="status" hidden>You are offline. Saved pages still work.</p>
+    <script>
+      // ---- Installable app and offline reading ----
+      if ('serviceWorker' in navigator) {
+        // Only the built site registers the service worker. In local development it
+        // would keep serving saved copies of files that are being edited.
+        if (import.meta.env.PROD) addEventListener('load', () => { navigator.serviceWorker.register('/sw.js').catch(() => {}); });
+        else navigator.serviceWorker.getRegistrations().then((all) => all.forEach((r) => r.unregister()));
+      }
+
+      // Tell visitors when they have lost their connection.
+      const net = document.getElementById('net-status');
+      const showNet = () => { if (net) net.hidden = navigator.onLine; };
+      addEventListener('online', showNet);
+      addEventListener('offline', showNet);
+      showNet();
+
+      // "Install the app" button in the footer. Browsers that support installing
+      // announce it with this event; the button stays hidden everywhere else.
+      type InstallEvent = Event & { prompt: () => Promise<unknown> };
+      const installBtn = document.getElementById('install-btn');
+      let installEvent: InstallEvent | null = null;
+      addEventListener('beforeinstallprompt', (event) => {
+        event.preventDefault();
+        installEvent = event as InstallEvent;
+        if (installBtn) installBtn.hidden = false;
+      });
+      installBtn?.addEventListener('click', async () => {
+        if (!installEvent) return;
+        await installEvent.prompt();
+        installEvent = null;
+        installBtn.hidden = true;
+      });
+      addEventListener('appinstalled', () => { if (installBtn) installBtn.hidden = true; });
+    </script>
     <script>
       // Scroll reveals and count-up numbers. The selector list matches src/styles/motion.css.
       const REVEAL = '.sec-head, .split > .stack, .card, .stat, .panel, .person, .champ, .timeline li, .steps li, .numbered li, .pipeline li, .link-card, .photo, .framed, .photo-row figure, .summit, .gallery button, .contact-card, .faq details, .dates > div, .benefit-list > div, .quote, .map, .hero-facts .wrap > div, .cta-band .wrap > *, .ridge';
