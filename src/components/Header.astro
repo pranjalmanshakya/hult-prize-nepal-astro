@@ -1,24 +1,34 @@
 ---
+import { Image } from 'astro:assets';
+import { brand } from '../lib/img';
 import { season } from '../data/site';
-interface Props { nav?: boolean }
-const { nav = true } = Astro.props;
-const links = [
-  ['about', 'About'], ['challenge', 'Challenge'], ['journey', 'Journey'], ['nepal', 'Nepal'], ['team', 'Team'],
-  ['champions', 'Champions'], ['campuses', 'Campuses'], ['nationals', 'Nationals'], ['partner', 'Partner'], ['contact', 'Contact'],
-];
-const base = nav ? '' : '/';
+import { pages, primaryNav } from '../data/pages';
+const here = Astro.url.pathname.replace(/\/?$/, '/');
 ---
-<header class="top" id="top-bar">
+<header class="top">
   <div class="wrap top-inner">
-    <a class="logo" href={nav ? '#home' : '/'} aria-label="EF Hult Prize Nepal home"><img src="/brand/logo-mark-light.png" alt="EF Hult Prize Nepal" width="441" height="189" /></a>
+    <a class="logo" href="/" aria-label="Hult Prize Nepal home">
+      <Image src={brand('logo-mark-light')} alt="EF Hult Prize Nepal" width={266} loading="eager" />
+    </a>
     <nav class="main" id="nav" aria-label="Main">
       <ul>
-        {links.map(([id, label]) => <li><a href={`${base}#${id}`}>{label}</a></li>)}
+        {primaryNav.map((key) => (
+          <li><a href={pages[key].path} aria-current={here === pages[key].path ? 'page' : undefined}>{pages[key].label}</a></li>
+        ))}
       </ul>
     </nav>
-    <div style="display:flex;gap:10px;align-items:center">
-      <a class="btn btn-primary" href={season.register} target="_blank" rel="noopener">Register <span class="arr">→</span></a>
-      <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
+    <div class="top-actions">
+      <a class="btn btn-primary btn-sm" href={season.register} target="_blank" rel="noopener">Register <span aria-hidden="true">↗</span></a>
+      <button class="menu-btn" id="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
+<script>
+  const btn = document.getElementById('menu-btn');
+  const setOpen = (open: boolean) => {
+    document.body.classList.toggle('menu-open', open);
+    btn?.setAttribute('aria-expanded', String(open));
+  };
+  btn?.addEventListener('click', () => setOpen(!document.body.classList.contains('menu-open')));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+</script>

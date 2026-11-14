@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Explore from '../components/Explore.astro';
+import { brand, sdgIcon } from '../lib/img';
+import { sdgs, season } from '../data/site';
+import { pages } from '../data/pages';
+---
+<Base page={pages.challenge}>
+  <PageHero page={pages.challenge} facts={['Any of the 17 SDGs', 'For-profit startups only', `${season.name} season`]} arch="volcano" kicker={`The ${season.name} challenge`} lead="Pitch any for-profit startup that creates measurable social impact, as long as it serves at least one of the 17 UN Sustainable Development Goals.">
+    Unlimited. <em>No single topic.</em>
+  </PageHero>
+
+  <section class="sec">
+    <div class="wrap split">
+      <div class="photo" style="max-width:440px">
+        <Image src={brand('art-confetti')} alt="Artwork for the Unlimited challenge: pink and orange confetti on a deep purple background" widths={[440, 565]} sizes="(max-width: 960px) 100vw, 440px" loading="eager" />
+      </div>
+      <div class="stack">
+        <span class="kicker">What you can pitch</span>
+        <h2 class="h2">A real business, with real impact</h2>
+        <p class="lead">It must be a real business that can sustain itself, not a charity or a one-off project.</p>
+        <ul class="checks">
+          <li>A for-profit startup</li>
+          <li>Creates measurable social impact</li>
+          <li>Serves at least one of the 17 UN Sustainable Development Goals</li>
+          <li>Can sustain itself financially</li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn btn-dark" href={pages.compete.path}>How to enter</a>
+          <a class="btn btn-line" href={pages.faq.path}>Read the FAQ</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec soft">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Pick your goal</span>
+        <h2 class="h2">The 17 Sustainable Development Goals</h2>
+        <p class="lead">Your startup can serve any one of these goals, or several of them.</p>
+      </div>
+      <ul class="sdgs">
+        {sdgs.map((name, i) => (
+          <li><Image src={sdgIcon(i + 1)} alt={`SDG ${i + 1}: ${name}`} width={320} height={320} /></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Explore keys={['compete', 'nationals', 'faq']} />
+</Base>

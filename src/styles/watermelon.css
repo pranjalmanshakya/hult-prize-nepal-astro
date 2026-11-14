@@ -1,0 +1,184 @@
+/* =========================================================
+   Watermelon UI layer
+
+   The design language of Watermelon UI (ui.watermelon.sh),
+   rebuilt in plain CSS with the Hult Prize Nepal brand colours
+   and Figtree. Nothing from the library itself is installed.
+
+   - A faint dot grid and two thin frame lines down the page,
+     with "+" marks where the section lines cross them.
+   - Rounded corners and thin borders on cards; pill buttons.
+   - Small "//" and "[ ]" labels in spaced capitals.
+   - A centred hero with a fanned deck of photos, a bento grid,
+     rolling-digit counters, and a scrolling partner strip.
+   ========================================================= */
+:root {
+  --radius: 18px;
+  --radius-sm: 12px;
+  --frame: rgba(255, 255, 255, .08);
+  --edge: max(12px, calc(50% - 580px));
+}
+
+/* ---------- Dot grid over the blurred photo, and frame lines ---------- */
+.backdrop::after {
+  background:
+    radial-gradient(rgba(255, 255, 255, .09) 1px, transparent 1.3px) 0 0 / 22px 22px,
+    linear-gradient(180deg, rgba(21, 0, 7, .8) 0%, rgba(21, 0, 7, .88) 45%, rgba(21, 0, 7, .93) 100%);
+}
+.frame-lines { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+.frame-lines::before, .frame-lines::after { content: ""; position: absolute; top: 0; bottom: 0; width: 1px; background: var(--frame); }
+.frame-lines::before { left: var(--edge); }
+.frame-lines::after { right: var(--edge); }
+
+/* Section lines, with a "+" where each meets a frame line */
+.sec, .fact-band { position: relative; }
+.sec { border-top: 1px solid var(--frame); }
+.sec::before, .sec::after { content: "+"; position: absolute; top: 0; z-index: 1; width: 15px; height: 15px; margin-top: -8px; font: 300 17px/15px var(--font); text-align: center; color: rgba(255, 255, 255, .5); pointer-events: none; }
+.sec::before { left: calc(var(--edge) - 7px); }
+.sec::after { right: calc(var(--edge) - 7px); }
+
+/* ---------- Type: lighter, larger headings with one accent word ---------- */
+.h2 { font-weight: 600; letter-spacing: -0.03em; }
+.h2 em, .cta-panel h2 em { font-style: normal; color: var(--heritage); }
+.page-hero h1, .hero h1, .cta-panel h2, .notfound h1 { font-weight: 600; }
+.page-hero h1 em { display: inline; }
+.champ h2 { font-weight: 700; }
+
+/* Labels: "// SECTION" and "[ CARD ]" */
+.kicker { color: var(--heritage); font-size: .74rem; letter-spacing: .2em; gap: 8px; }
+.kicker::before { content: "//"; width: auto; height: auto; background: none; border-radius: 0; color: var(--heritage); letter-spacing: 0; font-weight: 700; }
+.eyebrow, .bento-card .eyebrow { font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.eyebrow::before { content: "[ "; color: var(--heritage); }
+.eyebrow::after { content: " ]"; color: var(--heritage); }
+.card .eyebrow { color: var(--muted); }
+.sec-head.center { justify-items: center; text-align: center; }
+.sec-head.center .lead { margin-inline: auto; }
+
+/* ---------- Buttons: rounded pills ---------- */
+.btn { border-radius: 999px; letter-spacing: .01em; }
+.btn-sm { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; }
+
+/* ---------- Header: spaced capitals ---------- */
+nav.main a { font-size: .74rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; border-radius: 999px; }
+.menu-btn { border-radius: 12px; }
+
+
+/* ---------- Cards: thin border, rounded corners ---------- */
+.card, .link-card, .bento-card, .steps li, .numbered li, .stat, .panel.soft, .panel.line, .contact-card, .person, .champ, .pipeline li, .benefit-list > div, .prose .box, .facts li, .chips li {
+  border-radius: var(--radius);
+}
+.card:hover, .link-card:hover, .bento-card:hover, .stat:hover, .contact-card:hover { border-color: rgba(255, 50, 152, .55); }
+.stat { border-top-width: 2px; }
+.link-card::after { border-radius: 50%; }
+.photo, .photo-row img, .summit, .gallery button, .person img, .champ, .framed, .cta-panel, .hero-art, .sdgs img { border-radius: var(--radius); }
+.facts li, .chips li { font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 8px 14px; }
+.facts li::before { border-radius: 50%; width: 7px; height: 7px; }
+.badge-sun, .steps .badge { border-radius: 999px; }
+.faq summary::after { border-radius: 50%; }
+.facts li, .chips li, .marquee-track span { border-radius: 999px; }
+.cta-panel { border-radius: var(--radius); }
+
+/* ---------- Home hero: centred, with a fanned deck of photos ---------- */
+.hero { overflow: hidden; }
+.hero-center { display: grid; justify-items: center; text-align: center; gap: 24px; padding-block: 72px 8px; }
+.hero-center h1 { max-width: 15ch; font-size: clamp(2.6rem, 6.4vw, 5rem); letter-spacing: -0.04em; }
+.hero-center .lead { max-width: 60ch; }
+.hero-center .btn-row { justify-content: center; }
+.badge-line { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid rgba(255, 50, 152, .45); border-radius: 999px; background: rgba(255, 50, 152, .08); color: var(--heritage); font-size: .74rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+.badge-line i { font-style: normal; opacity: .6; }
+.key-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 4px; }
+.key-chips div { display: grid; gap: 2px; padding: 10px 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: rgba(255, 255, 255, .04); text-align: left; }
+.key-chips dt { font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.key-chips dd { font-size: .98rem; font-weight: 700; color: #fff; }
+.key-chips div:nth-child(1) dt { color: var(--sky); }
+.key-chips div:nth-child(2) dt { color: var(--sun); }
+.key-chips div:nth-child(3) dt { color: var(--heritage); }
+
+.deck { position: relative; height: clamp(300px, 36vw, 470px); margin-top: 48px; }
+.deck-card { position: absolute; left: 50%; bottom: -40px; z-index: var(--z); width: 300px; padding: 6px; border-radius: var(--radius); background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .18); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .9); transform: translateX(-50%) translateX(var(--x)) translateY(var(--y)) rotate(var(--r)); transition: transform .5s cubic-bezier(.2, .7, .2, 1); }
+.deck-card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; }
+.deck-card.poster { width: 280px; bottom: -20px; box-shadow: 0 40px 90px -30px rgba(255, 50, 152, .6); }
+.deck-card.poster img { aspect-ratio: 565 / 800; }
+.deck-card:hover { transform: translateX(-50%) translateX(var(--x)) translateY(calc(var(--y) - 18px)) rotate(var(--r)); }
+
+/* ---------- Bento grid ---------- */
+.bento { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; }
+.bento-card { position: relative; display: grid; gap: 10px; align-content: start; grid-column: span 2; min-height: 250px; padding: 26px; overflow: hidden; background-color: var(--glass); border: 1px solid var(--line); text-decoration: none; transition: transform .3s cubic-bezier(.2, .7, .2, 1), background-color .3s, border-color .3s; }
+.bento-card:hover { transform: translateY(-4px); background-color: var(--glass-hover); border-color: rgba(255, 255, 255, .26); }
+.bento-card.b-wide { grid-column: span 4; }
+.bento-card.b-full { grid-column: span 6; min-height: 0; }
+.bento-card > b { position: relative; z-index: 1; font-size: 1.25rem; font-weight: 700; color: #fff; }
+.bento-card > span:not(.decor):not(.marquee):not(.eyebrow) { position: relative; z-index: 1; max-width: 42ch; font-size: .95rem; color: var(--muted); }
+.bento-card .decor { margin-top: auto; }
+
+/* Challenge: concentric arcs around "17" */
+.decor.arcs { position: absolute; right: -60px; top: 50%; width: 300px; height: 300px; margin-top: -150px; border-radius: 50%; display: grid; place-items: center; align-content: center; background: repeating-radial-gradient(circle, transparent 0 34px, rgba(255, 255, 255, .1) 34px 35px); }
+.decor.arcs em { font-style: normal; font-size: 4rem; font-weight: 700; line-height: 1; letter-spacing: -0.04em; color: var(--sun); }
+.decor.arcs small { font-size: .72rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.b-wide > b, .b-wide > span:not(.decor):not(.eyebrow) { max-width: 30ch; }
+
+/* Compete: five stages, the first one live */
+.decor.stages { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; align-items: center; }
+.decor.stages i { height: 8px; border-radius: 999px; background: rgba(255, 255, 255, .14); }
+.decor.stages i.on { background: var(--heritage); }
+.decor.stages small { grid-column: 1 / -1; font-size: .7rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--heritage); }
+
+/* Nationals: the month */
+.decor.date { font-size: 2.6rem; font-weight: 700; line-height: 1; letter-spacing: -0.03em; text-transform: uppercase; color: #fff; }
+.decor.date em { font-style: normal; color: var(--sun); }
+
+/* Campuses: one square per campus */
+.decor.pixels { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; }
+.decor.pixels i { aspect-ratio: 1; border-radius: 50%; background: rgba(255, 255, 255, .1); }
+.decor.pixels i.on { background: var(--sky); opacity: .85; }
+
+/* Host: a segmented meter */
+.decor.meter { display: flex; gap: 3px; height: 26px; }
+.decor.meter i { flex: 1; border-radius: 999px; background: rgba(255, 255, 255, .12); }
+.decor.meter i:nth-child(-n + 15) { background: var(--heritage); }
+
+/* Partners: names scroll past */
+.marquee { display: block; overflow: hidden; margin-top: 10px; -webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee-track { display: flex; gap: 10px; width: max-content; }
+.marquee-track span { padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255, 255, 255, .04); font-size: .82rem; font-weight: 600; white-space: nowrap; color: #fff; }
+
+/* ---------- Rolling-digit counters ---------- */
+.odo { display: inline-flex; }
+.odo-d { display: inline-block; height: 1em; overflow: hidden; }
+.odo-s { display: flex; flex-direction: column; }
+.odo-s > span { display: block; height: 1em; line-height: 1em; }
+.run .odo-s { transform: translateY(calc(var(--n) * -1em)); transition: transform 1.6s cubic-bezier(.2, .8, .2, 1) calc(var(--k) * 90ms); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* ---------- Footer: giant faded wordmark ---------- */
+.wordmark { margin-top: 36px; overflow: hidden; font-size: clamp(2.2rem, 12vw, 10.2rem); font-weight: 800; line-height: .82; letter-spacing: -0.045em; text-align: center; white-space: nowrap; background: linear-gradient(180deg, rgba(255, 255, 255, .28), rgba(255, 255, 255, 0) 92%); -webkit-background-clip: text; background-clip: text; color: transparent; user-select: none; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1180px) {
+  .deck-card { width: 240px; }
+  .deck-card.poster { width: 230px; }
+  .deck-card:nth-child(1) { --x: -400px !important; }
+  .deck-card:nth-child(4) { --x: 400px !important; }
+}
+@media (max-width: 960px) {
+  .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bento-card, .bento-card.b-wide { grid-column: span 1; }
+  .bento-card.b-wide, .bento-card.b-full { grid-column: span 2; }
+  .deck-card:nth-child(1), .deck-card:nth-child(4) { display: none; }
+  .deck-card:nth-child(2) { --x: -200px !important; }
+  .deck-card:nth-child(3) { --x: 200px !important; }
+}
+@media (max-width: 640px) {
+  .frame-lines, .sec::before, .sec::after { display: none; }
+  .hero-center { padding-top: 48px; }
+  .badge-line { display: block; max-width: 100%; line-height: 1.6; letter-spacing: .12em; }
+  .key-chips { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: stretch; width: 100%; }
+  .deck { height: 300px; }
+  .deck-card { width: 180px; }
+  .deck-card.poster { width: 190px; }
+  .deck-card:nth-child(2) { --x: -105px !important; --y: 40px !important; }
+  .deck-card:nth-child(3) { --x: 105px !important; --y: 40px !important; }
+  .bento { grid-template-columns: minmax(0, 1fr); }
+  .bento-card, .bento-card.b-wide, .bento-card.b-full { grid-column: span 1; min-height: 0; }
+  .decor.arcs { position: relative; top: auto; right: auto; width: 100%; height: 150px; margin: 6px 0 0; border-radius: 0; background: repeating-radial-gradient(circle at 50% 50%, transparent 0 26px, rgba(255, 255, 255, .1) 26px 27px); }
+}

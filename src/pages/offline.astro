@@ -1,0 +1,38 @@
+---
+// Shown by the service worker (see sw.js.ts) when a page is requested with no
+// connection and no saved copy. It is not linked from anywhere and is kept out
+// of search results and the sitemap.
+import Base from '../layouts/Base.astro';
+import Explore from '../components/Explore.astro';
+import { pages, type PageMeta } from '../data/pages';
+const page: PageMeta = {
+  slug: 'home', // reuse the home share image
+  path: '/offline/',
+  label: 'Offline',
+  title: 'You Are Offline | Hult Prize Nepal',
+  description: 'This page is not available without an internet connection. Pages saved on this device from the Hult Prize Nepal website can still be read.',
+  blurb: '',
+  share: pages.home.share,
+};
+---
+<Base page={page} noindex>
+  <section class="notfound">
+    <div class="wrap">
+      <span class="kicker">No connection</span>
+      <h1>You are offline</h1>
+      <p class="lead">This page could not be loaded. The main pages of this site are saved on your device, so you can keep reading them until your connection is back.</p>
+      <div class="btn-row">
+        <button class="btn btn-primary" type="button" id="retry">Try again</button>
+        <a class="btn btn-line" href={pages.home.path}>Go to the home page</a>
+      </div>
+    </div>
+  </section>
+
+  <Explore keys={['compete', 'challenge', 'nationals', 'nepal', 'host', 'faq']} heading="Saved for offline reading" />
+</Base>
+
+<script>
+  document.getElementById('retry')?.addEventListener('click', () => location.reload());
+  // When the connection returns, load the page that was asked for.
+  addEventListener('online', () => location.reload());
+</script>

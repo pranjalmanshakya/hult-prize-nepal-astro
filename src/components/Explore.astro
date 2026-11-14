@@ -1,0 +1,15 @@
+---
+import { pages, type PageKey } from '../data/pages';
+interface Props { keys: PageKey[]; heading?: string; soft?: boolean }
+const { keys, heading = 'Keep exploring', soft = false } = Astro.props;
+---
+<section class={`sec tight${soft ? ' soft' : ''}`}>
+  <div class="wrap">
+    <h2 class="h3" style="margin-bottom:22px">{heading}</h2>
+    <div class="explore">
+      {keys.map((key) => (
+        <a class="link-card" href={pages[key].path}><b>{pages[key].label}</b><span>{pages[key].blurb}</span></a>
+      ))}
+    </div>
+  </div>
+</section>

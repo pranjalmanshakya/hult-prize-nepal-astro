@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Explore from '../components/Explore.astro';
+import { sources } from '../data/site';
+import { pages } from '../data/pages';
+---
+<Base page={pages.sources}>
+  <PageHero page={pages.sources} arch="cotton" kicker="Transparency" lead="Every fact on this site was checked against the sources below on 18 October 2026. Hult Prize Nepal figures come from our own 2025–26 qualifiers report.">
+    Sources and <em>verification</em>
+  </PageHero>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="prose">
+        <h2>Where the facts come from</h2>
+        <ul class="source-list">
+          {sources.map(([label, url]) => (
+            <li>{url ? <a href={url} target="_blank" rel="noopener">{label} <span aria-hidden="true">↗</span></a> : label}</li>
+          ))}
+        </ul>
+        <p class="box">Spotted something out of date? <a href={pages.contact.path}>Tell the national team</a> and we will correct it.</p>
+      </div>
+    </div>
+  </section>
+
+  <Explore keys={['about', 'nepal', 'legal']} soft />
+</Base>

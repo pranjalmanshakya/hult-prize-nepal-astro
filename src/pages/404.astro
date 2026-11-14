@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import Explore from '../components/Explore.astro';
+import { pages, type PageMeta } from '../data/pages';
+const page: PageMeta = {
+  slug: 'home', // reuse the home share image
+  path: '/404/',
+  label: 'Page not found',
+  title: 'Page Not Found | Hult Prize Nepal',
+  description: 'This page does not exist on the Hult Prize Nepal website. Head back to the home page or pick one of the main sections.',
+  blurb: '',
+  share: pages.home.share,
+};
+---
+<Base page={page} noindex>
+  <section class="notfound">
+    <div class="wrap">
+      <span class="code" aria-hidden="true">404</span>
+      <h1>We could not find that page</h1>
+      <p class="lead">The link may be old, or the address may have a typo. The site was recently reorganized into separate pages, so the section you want probably has a new home.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href={pages.home.path}>Back to the home page</a>
+        <a class="btn btn-line" href={pages.contact.path}>Contact the team</a>
+      </div>
+    </div>
+  </section>
+
+  <Explore keys={['compete', 'challenge', 'nationals', 'nepal', 'campuses', 'faq']} heading="Popular pages" />
+</Base>

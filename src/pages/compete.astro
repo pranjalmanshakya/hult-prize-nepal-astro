@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Explore from '../components/Explore.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { journey, season } from '../data/site';
+import { pages } from '../data/pages';
+const tones = ['c-heritage', 'c-sun', 'c-sky', 'c-purple', 'c-midnight'];
+---
+<Base page={pages.compete}>
+  <PageHero page={pages.compete} facts={['You represent your campus', 'Teams of 2 to 4 students', 'Free to register', `Qualifiers end before ${season.qualifiersCloseLabel}`]} arch="cotton" kicker={`Enter the EF Hult Prize ${season.name}`} lead="To compete from Nepal, your team represents its campus. Win your college's qualifier, pitch at Nationals, and you could represent Nepal on the road to US$1,000,000 in seed funding.">
+    How to enter <em>from Nepal</em>
+    <Fragment slot="actions">
+      <a class="btn btn-primary" href={season.register} target="_blank" rel="noopener">Apply at hultprize.org <span aria-hidden="true">↗</span></a>
+      <a class="btn btn-line" href={pages.challenge.path}>See the challenge</a>
+    </Fragment>
+  </PageHero>
+
+  <section class="sec">
+    <div class="wrap grid g2">
+      <div class="panel line">
+        <h2>Who can enter</h2>
+        <ul class="checks">
+          <li>Your team represents one campus: a college or university in Nepal</li>
+          <li>Teams of 2 to 4 students</li>
+          <li>Every member is enrolled in a degree program</li>
+          <li>All members must be 18 years or older</li>
+          <li>Members may study at different colleges, but the team represents one</li>
+        </ul>
+      </div>
+      <div class="panel c-midnight">
+        <h2>Qualify through your campus</h2>
+        <p>The qualifier round is where your team earns the right to represent its campus. That campus is who you compete for at Nationals.</p>
+        <ul class="list">
+          <li><b>OnCampus Program:</b> join your college's program, attend the workshops and win its Grand Finale. The winner goes to Nationals for that campus.</li>
+          <li><b>No program at your college yet?</b> Ask your college to host one and we will help set it up. Until then, apply through the Open Application at hultprize.org on behalf of your college and pass the online reviews.</li>
+        </ul>
+        <p>Not sure whether your college runs a program? <a href={pages.campuses.path} style="font-weight:700">See the campus network</a> or <a href={pages.host.path} style="font-weight:700">bring one to your campus</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec soft">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">{season.name} season</span>
+        <h2 class="h2">Key dates</h2>
+      </div>
+      <dl class="dates">
+        <div><dt>Sep 2026 – before 15 Feb 2027</dt><dd>Campus qualifiers: OnCampus Programs, and the Open Application for colleges without one</dd></div>
+        <div><dt>Before Nationals</dt><dd>Workshops on business models and pitching</dd></div>
+        <div><dt>Last week of Apr 2027</dt><dd>Hult Prize Nepal <a class="text-link" href={pages.nationals.path}>National Competition</a></dd></div>
+        <div><dt>Jun – Sep 2027</dt><dd>Digital Incubator, Global Accelerator (UK), Global Finals</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sec" id="journey">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">The Hult Prize journey {season.name}</span>
+        <h2 class="h2">From your campus to the world stage</h2>
+        <p class="lead">Five stages take a student team from a college hall in Nepal to the US$1M Global Finals.</p>
+      </div>
+      <ol class="steps">
+        {journey.map((s, i) => (
+          <li class={s.now ? 'now' : undefined}>
+            <span class={`num ${tones[i % tones.length]}`} aria-hidden="true">{s.n}</span>
+            {s.now && <span class="badge">Happening now</span>}
+            <span class="when">{s.when}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="small muted" style="margin-top:24px">Stage months follow the official EF Hult Prize season calendar. Exact 2027 global dates are confirmed by Hult Prize during the season. National finalists are also considered for Hult Prize's Second Chance Round.</p>
+    </div>
+  </section>
+
+  <Explore keys={['challenge', 'nationals', 'faq']} soft />
+  <CtaBand />
+</Base>

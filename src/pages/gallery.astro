@@ -1,0 +1,96 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Explore from '../components/Explore.astro';
+import { photo } from '../lib/img';
+import { gallery, summits } from '../data/site';
+import { pages } from '../data/pages';
+const items = await Promise.all(gallery.map(async (g) => {
+  const src = photo(g.img);
+  const full = await getImage({ src, width: Math.min(src.width, 1600) });
+  return { ...g, src, full: full.src };
+}));
+---
+<Base page={pages.gallery}>
+  <PageHero page={pages.gallery} arch="cotton" kicker="Photos" lead="OnCampus events, panels and finals across Nepal, and Hult Prize summits around the world.">
+    Hult Prize Nepal <em>in pictures</em>
+  </PageHero>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">From our events</span>
+        <h2 class="h2">On campus and on stage</h2>
+        <p class="lead">Select a photo to see it larger.</p>
+      </div>
+      <div class="gallery" id="gallery-grid">
+        {items.map((g) => (
+          <button type="button" data-cap={g.cap} data-full={g.full} aria-label={`Enlarge photo: ${g.cap}`}>
+            <Image src={g.src} alt={g.cap} widths={[320, 640]} sizes="(max-width: 640px) 100vw, 280px" />
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec soft">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Hult Prize global presence</span>
+        <h2 class="h2">A worldwide community</h2>
+        <p class="lead">The 2023 regional summits took Hult Prize teams to Taipei, Monterrey, Melbourne, Boston, Mumbai and Dubai.</p>
+      </div>
+      <div class="summits">
+        {summits.map((s) => (
+          <figure class="summit">
+            <Image src={photo(s.img)} alt={`Hult Prize regional summit in ${s.city}, 2023`} width={480} />
+            <figcaption>{s.city}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <dialog class="lb" id="lb" aria-label="Photo viewer">
+    <div class="lb-bar">
+      <span id="lb-cap"></span>
+      <div>
+        <button type="button" id="lb-prev" aria-label="Previous photo">←</button>
+        <button type="button" id="lb-next" aria-label="Next photo">→</button>
+        <button type="button" id="lb-close">Close</button>
+      </div>
+    </div>
+  </dialog>
+
+  <Explore keys={['nepal', 'champions', 'campuses']} />
+</Base>
+
+<script>
+  // Photo viewer. Only this page loads this code.
+  const lb = document.querySelector<HTMLDialogElement>('#lb');
+  const shots = Array.from(document.querySelectorAll<HTMLButtonElement>('#gallery-grid button'));
+  if (lb && shots.length) {
+    // The large image is created here, so the page carries no empty <img> before a photo is opened.
+    const img = new Image();
+    lb.prepend(img);
+    const cap = lb.querySelector<HTMLElement>('#lb-cap')!;
+    let cur = 0;
+    const show = (i: number) => {
+      cur = (i + shots.length) % shots.length;
+      const b = shots[cur];
+      img.src = b.dataset.full!;
+      img.alt = b.dataset.cap!;
+      cap.textContent = b.dataset.cap!;
+    };
+    shots.forEach((b, i) => b.addEventListener('click', () => { show(i); lb.showModal(); }));
+    lb.querySelector('#lb-prev')!.addEventListener('click', () => show(cur - 1));
+    lb.querySelector('#lb-next')!.addEventListener('click', () => show(cur + 1));
+    lb.querySelector('#lb-close')!.addEventListener('click', () => lb.close());
+    lb.addEventListener('click', (e) => { if (e.target === lb) lb.close(); });
+    lb.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(cur - 1);
+      if (e.key === 'ArrowRight') show(cur + 1);
+    });
+  }
+</script>

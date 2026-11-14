@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Explore from '../components/Explore.astro';
+import { photo } from '../lib/img';
+import { team, season } from '../data/site';
+import { pages } from '../data/pages';
+import { gmailCompose } from '../lib/mail';
+---
+<Base page={pages.contact}>
+  <PageHero page={pages.contact} kicker="Get in touch" lead="We will walk you through registration, setting up your OnCampus Program, and everything after.">
+    Talk to our <em>national team</em>
+  </PageHero>
+
+  <section class="sec">
+    <div class="wrap split top">
+      <div class="contacts">
+        {team.map((p) => (
+          <article class="contact-card">
+            <Image src={photo(p.photo)} alt={p.alt} width={144} height={144} loading="eager" />
+            <div>
+              <span class="role">{p.role.replace(' 2027', '')}</span>
+              <h2>{p.name}</h2>
+              <a class="text-link" href={gmailCompose(p.email)} target="_blank" rel="noopener">{p.email}</a>
+            </div>
+          </article>
+        ))}
+      </div>
+      <div class="stack">
+        <div class="panel c-midnight">
+          <h2>Follow the season</h2>
+          <p>Follow @hultprizenepal for announcements and the call for Campus Directors.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" href={season.instagram} target="_blank" rel="noopener">Instagram @hultprizenepal <span aria-hidden="true">↗</span></a>
+            <a class="btn btn-light" href={season.official} target="_blank" rel="noopener">hultprize.org <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="panel soft">
+          <h2>Before you write</h2>
+          <ul class="list">
+            <li>Entering the competition? See <a class="text-link" href={pages.compete.path}>how to enter</a> and the <a class="text-link" href={pages.faq.path}>FAQ</a>.</li>
+            <li>Want a program at your college? Read <a class="text-link" href={pages.host.path}>how hosting works</a>.</li>
+            <li>Interested in sponsoring or judging? See <a class="text-link" href={pages.partners.path}>partnering with us</a>.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Explore keys={['host', 'partners', 'team']} soft />
+</Base>

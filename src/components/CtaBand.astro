@@ -1,0 +1,17 @@
+---
+import { season } from '../data/site';
+import { pages } from '../data/pages';
+---
+<section class="sec tight">
+  <div class="wrap">
+    <div class="cta-panel">
+      <div class="arch volcano" aria-hidden="true"></div>
+      <h2>Got an idea that could change the world?</h2>
+      <p>Enter the EF Hult Prize {season.name}. Build a startup that tackles a real problem, pitch it, and you could represent Nepal on the road to US$1,000,000 in seed funding.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href={season.register} target="_blank" rel="noopener">Register your startup <span aria-hidden="true">↗</span></a>
+        <a class="btn btn-light" href={pages.compete.path}>See how to enter</a>
+      </div>
+    </div>
+  </div>
+</section>

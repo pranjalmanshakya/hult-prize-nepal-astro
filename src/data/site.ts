@@ -14,6 +14,17 @@ export const season = {
   instagram: 'https://www.instagram.com/hultprizenepal/',
 };
 
+// Facts about the organization itself, used for structured data, llms.txt and the footer.
+export const org = {
+  name: 'Hult Prize Nepal',
+  alternateName: 'EF Hult Prize Nepal',
+  description: "Hult Prize Nepal is the national program of the EF Hult Prize, the world's largest student startup competition. It supports OnCampus Programs at colleges across Nepal and hosts the National Competition.",
+  country: 'NP',
+  countryName: 'Nepal',
+  foundingYear: '2016',
+  email: 'lakkithaapa8@gmail.com', // National Coordinator
+};
+
 // EF Hult Prize 2026 global season (PR Newswire, 9 Sep 2026; also in the approved proposal)
 export const globalStats = [
   { n: 55000, suffix: '+', label: 'young entrepreneurs' },
@@ -34,12 +45,12 @@ export const nepalStats = [
 
 // Map pins: x/y are percentages of public/brand/nepal-map.png (703x407), placed by real geography.
 export const presence = [
-  { city: 'Kathmandu', x: 66, y: 60 },  // Bagmati, centre of the Valley
+  { city: 'Kathmandu', x: 66, y: 60, align: 'above' },  // Bagmati, centre of the Valley
   { city: 'Pokhara', x: 48, y: 50 },    // Gandaki
   { city: 'Biratnagar', x: 85, y: 88 }, // Koshi, southern Terai
-  { city: 'Hetauda', x: 61, y: 72 },    // Bagmati, south of Kathmandu
+  { city: 'Hetauda', x: 61, y: 72, align: 'right' },    // Bagmati, south of Kathmandu
   { city: 'Mechi Multiple Campus', x: 95, y: 83, align: 'right above' }, // Bhadrapur, Jhapa (far south-east)
-  { city: 'Madesh', x: 71, y: 83 },     // Madhesh Province (Janakpur)
+  { city: 'Madhesh', x: 71, y: 83 },     // Madhesh Province (Janakpur)
   { city: 'Far Western University', x: 6, y: 40, align: 'left' }, // Bhimdatta (Mahendranagar), Kanchanpur
   // align: labels near the map edge hang to one side so they stay on screen
 ];
@@ -79,7 +90,7 @@ export const sdgs = [
 ];
 
 export const journey = [
-  { n: '01', when: 'Sep 2026 – before 15 Feb 2027', title: 'Qualifiers', text: "Win your campus's OnCampus Program, or apply through the online Open Application and pass two online reviews.", now: true },
+  { n: '01', when: 'Sep 2026 – before 15 Feb 2027', title: 'Campus qualifiers', text: "Earn the right to represent your campus: win your college's OnCampus Program, or, if your college has none, apply for it through the Open Application and pass two online reviews.", now: true },
   { n: '02', when: 'Last week of April 2027', title: 'Nepal Nationals', text: 'Qualified teams from across Nepal pitch at the National Competition. The winner represents Nepal.' },
   { n: '03', when: 'Jun – Jul 2027', title: 'Digital Incubator', text: 'National winners and top online applicants get world-class mentors to validate their market and build a proof of concept.' },
   { n: '04', when: 'Aug 2027', title: 'Global Accelerator', text: 'Selected teams spend a month of intensive mentoring at Ashridge House, outside London.' },
@@ -98,9 +109,9 @@ export const story = [
 ];
 
 export const team = [
-  { badge: 'NC', role: 'National Coordinator 2027', name: 'Lakki Thapa', email: 'lakkithaapa8@gmail.com', photo: 'nc-lakki-thapa' },
-  { badge: 'NCC', role: 'National Community Coordinator 2027', name: 'Pranjal Man Shakya', email: 'pranjal.m.shakya@gmail.com', photo: 'ncc-pranjal-shakya' },
-  { badge: 'DNC', role: 'Deputy National Coordinator 2027', name: 'Siddhartha Krishna Ghimire', email: 'ghimiresg45@gmail.com', photo: 'dnc-siddhartha-ghimire' },
+  { badge: 'NC', role: 'National Coordinator 2027', name: 'Lakki Thapa', email: 'lakkithaapa8@gmail.com', photo: 'nc-lakki-thapa', alt: 'Lakki Thapa, National Coordinator of Hult Prize Nepal' },
+  { badge: 'NCC', role: 'National Community Coordinator 2027', name: 'Pranjal Man Shakya', email: 'pranjal.m.shakya@gmail.com', photo: 'ncc-pranjal-shakya', alt: 'Pranjal Man Shakya, National Community Coordinator of Hult Prize Nepal' },
+  { badge: 'DNC', role: 'Deputy National Coordinator 2027', name: 'Siddhartha Krishna Ghimire', email: 'ghimiresg45@gmail.com', photo: 'dnc-siddhartha-ghimire', alt: 'Siddhartha Krishna Ghimire, Deputy National Coordinator of Hult Prize Nepal' },
 ];
 
 export const pastLeadership = [
@@ -155,8 +166,9 @@ export const gallery = [
 export const faqs = [
   ['Does it cost anything to enter?', 'No. Registration for the EF Hult Prize at hultprize.org is free.'],
   ['What can we pitch this season?', 'Anything. The 2026–27 challenge is Unlimited: any for-profit startup that creates measurable social impact and serves at least one UN Sustainable Development Goal.'],
+  ['Do we have to represent our campus?', 'Yes. To compete from Nepal, every team represents one campus, a college or university in Nepal, starting at the qualifier level. The team that wins its campus qualifier competes for that campus at Nationals.'],
   ['Can team members come from different colleges?', 'Yes, but the team represents one college. Every member must be enrolled in a degree program and be 18 years or older.'],
-  ['What if my college has no OnCampus Program?', 'Apply through the Open Application at hultprize.org and pass the online review rounds, or ask your college to host one. We will help them set it up.'],
+  ['What if my college has no OnCampus Program?', 'Ask your college to host one, and we will help them set it up. Until then, apply through the Open Application at hultprize.org on behalf of your college and pass the online review rounds.'],
   ['What do national winners get?', 'National recognition, workshops with mentors and industry experts, and a place in the Hult Prize Digital Incubator, with a shot at the UK Accelerator and the Global Finals.'],
   ['How do I become a Campus Director?', 'Campus Director registration for 2026–27 closes on 13 November 2026. Email the National Coordinator or follow @hultprizenepal for the call.'],
 ];
@@ -173,7 +185,7 @@ export const sources: [string, string][] = [
   ['SUTD: Stick ’Em wins the 2025 Hult Prize', 'https://www.sutd.edu.sg/media-releases-listing/singapore-start-up-founded-by-sutd-graduate-wins-prestigious-1m-hult-prize'],
   ['Hult Prize: 2024 winner Korion Health', 'https://hultprize.org/hult-prize-winners/2024/korion-health'],
   ['Hult Prize: 2022 winner EcoBana', 'https://www.hultprize.org/hult-prize-winners/2022/ecobana'],
-  ['UCL: SunRice / Rice Inc., 2018 Hult Prize', 'https://www.ucl.ac.uk/enterprise/news/2018/sep/ucl-social-enterprise-rice-inc-through-hult-prize-final'],
+  ['UCL: Rice Inc. (formerly SunRice), 2018 Hult Prize winner', 'https://www.ucl.ac.uk/made-at-ucl/stories/enterprising-ucl-students-help-alleviate-food-poverty-southeast-asia'],
   ['The Kathmandu Post: first OnCampus rounds in Nepal (2016)', 'https://kathmandupost.com/miscellaneous/2016/12/14/over-300-nepali-students-competing-for-hult-prize'],
   ['ICT Frame: Hult Prize Impact Summit Kathmandu (2021)', 'https://ictframe.com/hult-prize-2021-impact-summit-kathmandu/'],
   ['Nepali Telecom: Hult Prize at IOE 2021–22 winners', 'https://www.nepalitelecom.com/2022/02/hult-prize-grand-finals-concludes-find-out-the-winners.html'],

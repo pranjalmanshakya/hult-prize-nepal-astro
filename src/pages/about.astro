@@ -1,0 +1,86 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Explore from '../components/Explore.astro';
+import { photo } from '../lib/img';
+import { globalStats, globalHistory, leaders, globalWinners } from '../data/site';
+import { pages } from '../data/pages';
+const tones = ['c-heritage', 'c-sky', 'c-sun'];
+---
+<Base page={pages.about}>
+  <PageHero page={pages.about} facts={['Since 2010', 'US$1,000,000 prize', '131 countries in 2026']} kicker="What is the EF Hult Prize?" lead="The EF Hult Prize is the world's largest student startup competition. It challenges university students to build financially sustainable startups that tackle the world's biggest problems, in line with the UN Sustainable Development Goals.">
+    The “Nobel Prize” <em>for students</em>
+  </PageHero>
+
+  <section class="sec">
+    <div class="wrap split">
+      <div class="photo wide">
+        <Image src={photo('ef-hult-community')} alt="Hult Prize participants holding pink Hult Prize flags" widths={[560, 1120, 1400]} sizes="(max-width: 960px) 100vw, 560px" quality={90} loading="eager" />
+      </div>
+      <div class="stack">
+        <h2 class="h2">US$1,000,000 for one student team, every year</h2>
+        <p class="lead">It began in 2010 at Hult International Business School and is funded by the Hult family, founders of EF Education First. More than a million young people have taken part.</p>
+        <p class="muted">Every September, one team wins US$1,000,000 in seed funding to launch its venture.</p>
+      </div>
+    </div>
+    <div class="wrap" style="margin-top:48px">
+      <div class="stats">
+        {globalStats.map((s) => <div class="stat plain"><b>{s.n.toLocaleString('en-US')}{s.suffix}</b><span>{s.label}</span></div>)}
+      </div>
+      <p class="small muted" style="margin-top:14px">The 2026 global season in numbers.</p>
+    </div>
+  </section>
+
+  <section class="sec soft">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Since 2010</span>
+        <h2 class="h2">How the prize grew</h2>
+      </div>
+      <ol class="timeline">
+        {globalHistory.map((h) => <li><span class="when">{h.y}</span><p>{h.t}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Who is behind it</span>
+        <h2 class="h2">The people and institutions</h2>
+      </div>
+      <div class="grid g3">
+        {leaders.map((l, i) => (
+          <article class="card">
+            <span class={`mono ${tones[i % tones.length]}`} aria-hidden="true">{l.mono}</span>
+            <span class="eyebrow">{l.role}</span>
+            <h3>{l.name}</h3>
+            <p>{l.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec midnight">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Global winners</span>
+        <h2 class="h2">Ideas that won it all</h2>
+        <p class="lead">Past winners of the global prize, and what each of them set out to do. Nepal's own winners are on the <a class="text-link" style="color:#fff" href={pages.champions.path}>champions page</a>.</p>
+      </div>
+      <div class="grid g3">
+        {globalWinners.map((w) => (
+          <article class="card">
+            <span class="eyebrow">{w.y}</span>
+            <h3>{w.name}</h3>
+            <p><b style="color:#fff">{w.where}.</b> {w.what}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Explore keys={['challenge', 'compete', 'nepal']} />
+</Base>

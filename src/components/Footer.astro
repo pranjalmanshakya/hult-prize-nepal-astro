@@ -1,25 +1,48 @@
 ---
-import { season, sources } from '../data/site';
+import { Image } from 'astro:assets';
+import { brand } from '../lib/img';
+import { season } from '../data/site';
+import { pages, footerNav } from '../data/pages';
 ---
-<section class="sources" id="sources">
-  <div class="wrap">
-    <details>
-      <summary>Sources and verification</summary>
-      <p style="margin-top:10px">Every fact on this site was checked against the sources below on 18 October 2026. Hult Prize Nepal figures come from our own 2025–26 qualifiers report.</p>
-      <ul>
-        {sources.map(([label, url]) => <li>{url ? <a href={url} target="_blank" rel="noopener">{label}</a> : label}</li>)}
-      </ul>
-    </details>
-  </div>
-</section>
 <footer class="site">
   <div class="wrap">
+    <!-- A Himalayan ridge line in the brand colours; it draws itself in (motion.css) -->
+    <svg class="ridge" viewBox="0 0 1200 90" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="ridge-gradient" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#12B1E7" /><stop offset="0.5" stop-color="#FF3298" /><stop offset="1" stop-color="#FDD40E" />
+        </linearGradient>
+      </defs>
+      <path pathLength="1" d="M0 84 L70 58 L118 70 L190 30 L236 52 L300 40 L352 66 L440 10 L500 50 L548 34 L610 64 L690 22 L744 56 L820 38 L880 68 L960 44 L1010 62 L1090 26 L1150 60 L1200 48" />
+    </svg>
     <div class="foot">
-      <div><img src="/brand/logo-full-light.png" alt="EF Hult Prize Nepal" width="1020" height="233" /><p>Changing the world through social enterprise. Hult Prize Nepal, 2026–27 season.</p></div>
-      <div><h4>Compete</h4><ul><li><a href="/#challenge">The challenge</a></li><li><a href="/#journey">The journey</a></li><li><a href="/#enter">Enter</a></li><li><a href={season.register} target="_blank" rel="noopener">Register ↗</a></li></ul></div>
-      <div><h4>Hult Prize Nepal</h4><ul><li><a href="/#nepal">Our story</a></li><li><a href="/#team">National team</a></li><li><a href="/#champions">Champions</a></li><li><a href="/#campuses">Campuses</a></li><li><a href="/#partner">Partner with us</a></li></ul></div>
-      <div><h4>Elsewhere</h4><ul><li><a href={season.official} target="_blank" rel="noopener">hultprize.org ↗</a></li><li><a href={season.instagram} target="_blank" rel="noopener">Instagram ↗</a></li><li><a href="/legal">Privacy &amp; terms</a></li></ul></div>
+      <div class="brand">
+        <Image src={brand('logo-full-light')} alt="EF Hult Prize Nepal" width={420} loading="lazy" />
+        <p>Changing the world through social enterprise. Hult Prize Nepal, {season.name} season.</p>
+        <!-- Shown by the script in Base.astro only when the browser can install the site as an app -->
+        <button class="btn btn-light btn-sm" type="button" id="install-btn" hidden>Install the app</button>
+      </div>
+      {footerNav.map((col) => (
+        <nav aria-label={col.heading}>
+          <h2>{col.heading}</h2>
+          <ul>{col.keys.map((key) => <li><a href={pages[key].path}>{pages[key].label}</a></li>)}</ul>
+        </nav>
+      ))}
+      <nav aria-label="Elsewhere">
+        <h2>Elsewhere</h2>
+        <ul>
+          <li><a href={season.register} target="_blank" rel="noopener">Register <span aria-hidden="true">↗</span></a></li>
+          <li><a href={season.official} target="_blank" rel="noopener">hultprize.org <span aria-hidden="true">↗</span></a></li>
+          <li><a href={season.instagram} target="_blank" rel="noopener">Instagram <span aria-hidden="true">↗</span></a></li>
+          <li><a href={pages.sources.path}>{pages.sources.label}</a></li>
+          <li><a href={pages.legal.path}>{pages.legal.label}</a></li>
+        </ul>
+      </nav>
     </div>
-    <div class="foot-bottom"><span>© 2026 Hult Prize Nepal. EF, Hult Prize and related marks belong to their owners.</span><span>Global figures: EF Hult Prize 2026 season. Nepal figures: Hult Prize Nepal 2025–26 qualifiers report.</span></div>
+    <div class="foot-bottom">
+      <span>© 2026 Hult Prize Nepal. EF, Hult Prize and related marks belong to their owners.</span>
+      <span>Global figures: EF Hult Prize 2026 season. Nepal figures: Hult Prize Nepal 2025–26 qualifiers report.</span>
+    </div>
+    <div class="wordmark" aria-hidden="true">Hult Prize Nepal</div>
   </div>
 </footer>

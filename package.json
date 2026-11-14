@@ -9,9 +9,15 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "brand-assets": "node scripts/make-brand-assets.mjs",
+    "upscale-photos": "node scripts/upscale-photos.mjs"
   },
   "dependencies": {
+    "@fontsource-variable/figtree": "^5.3.0",
     "astro": "^7.4.0"
+  },
+  "devDependencies": {
+    "@expo-google-fonts/figtree": "^0.4.1"
   }
 }
