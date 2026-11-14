@@ -6,6 +6,7 @@ import Explore from '../components/Explore.astro';
 import { photo } from '../lib/img';
 import { team, season } from '../data/site';
 import { pages } from '../data/pages';
+import { gmailCompose } from '../lib/mail';
 ---
 <Base page={pages.contact}>
   <PageHero page={pages.contact} kicker="Get in touch" lead="We will walk you through registration, setting up your OnCampus Program, and everything after.">
@@ -21,7 +22,7 @@ import { pages } from '../data/pages';
             <div>
               <span class="role">{p.role.replace(' 2027', '')}</span>
               <h2>{p.name}</h2>
-              <a class="text-link" href={`mailto:${p.email}`}>{p.email}</a>
+              <a class="text-link" href={gmailCompose(p.email)} target="_blank" rel="noopener">{p.email}</a>
             </div>
           </article>
         ))}

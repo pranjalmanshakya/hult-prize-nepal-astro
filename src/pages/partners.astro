@@ -4,8 +4,9 @@ import PageHero from '../components/PageHero.astro';
 import Explore from '../components/Explore.astro';
 import { pastPartners, team } from '../data/site';
 import { pages } from '../data/pages';
+import { gmailCompose } from '../lib/mail';
 const nc = team[0];
-const mail = `mailto:${nc.email}?subject=Partnering%20with%20Hult%20Prize%20Nepal`;
+const mail = gmailCompose(nc.email, 'Partnering with Hult Prize Nepal');
 const why = [
   ['Diverse talent', 'Engage the brightest minds from 50+ colleges across Nepal.'],
   ['Brand visibility', '500+ media appearances across TV, print and digital.'],
@@ -18,8 +19,8 @@ const why = [
   <PageHero page={pages.partners} facts={['50+ colleges', '500+ media appearances', '50+ startups']} kicker="Partner with us" lead="Join the organizations backing student founders from 50+ colleges across Nepal, from OnCampus Programs to the National Competition.">
     Back Nepal's <em>next founders</em>
     <Fragment slot="actions">
-      <a class="btn btn-primary" href={mail}>Talk to us about partnering</a>
-      <a class="btn btn-light" href={pages.nationals.path}>About Nationals 2027</a>
+      <a class="btn btn-primary" href={mail} target="_blank" rel="noopener">Talk to us about partnering <span aria-hidden="true">↗</span></a>
+      <a class="btn btn-line" href={pages.nationals.path}>About Nationals 2027</a>
     </Fragment>
   </PageHero>
 
@@ -46,7 +47,7 @@ const why = [
           <li>Early access to Nepal's most promising student talent</li>
           <li>Recognition in press coverage and post-event videos</li>
         </ul>
-        <div class="btn-row"><a class="btn btn-primary" href={mail}>Email the National Coordinator</a></div>
+        <div class="btn-row"><a class="btn btn-primary" href={mail} target="_blank" rel="noopener">Email the National Coordinator <span aria-hidden="true">↗</span></a></div>
       </div>
       <div class="stack">
         <span class="kicker">In good company</span>

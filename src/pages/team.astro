@@ -6,6 +6,7 @@ import Explore from '../components/Explore.astro';
 import { photo } from '../lib/img';
 import { team, pastLeadership } from '../data/site';
 import { pages } from '../data/pages';
+import { gmailCompose } from '../lib/mail';
 import { teamSchema } from '../lib/schema';
 const roles = [
   ['National Coordinator', 'Leads Hult Prize in Nepal and the National Competition.'],
@@ -27,7 +28,7 @@ const roles = [
             <div class="info">
               <span class="role">{p.role}</span>
               <h2 class="h3">{p.name}</h2>
-              <a href={`mailto:${p.email}`}>{p.email}</a>
+              <a href={gmailCompose(p.email)} target="_blank" rel="noopener">{p.email}</a>
             </div>
           </article>
         ))}

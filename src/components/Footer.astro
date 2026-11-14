@@ -6,14 +6,14 @@ import { pages, footerNav } from '../data/pages';
 ---
 <footer class="site">
   <div class="wrap">
-    <!-- Decorative Himalayan ridge line in the brand colours -->
+    <!-- A Himalayan ridge line in the brand colours; it draws itself in (motion.css) -->
     <svg class="ridge" viewBox="0 0 1200 90" preserveAspectRatio="none" aria-hidden="true" focusable="false">
       <defs>
         <linearGradient id="ridge-gradient" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0" stop-color="#12B1E7" /><stop offset="0.5" stop-color="#FF3298" /><stop offset="1" stop-color="#FDD40E" />
         </linearGradient>
       </defs>
-      <path d="M0 84 L70 58 L118 70 L190 30 L236 52 L300 40 L352 66 L440 10 L500 50 L548 34 L610 64 L690 22 L744 56 L820 38 L880 68 L960 44 L1010 62 L1090 26 L1150 60 L1200 48" />
+      <path pathLength="1" d="M0 84 L70 58 L118 70 L190 30 L236 52 L300 40 L352 66 L440 10 L500 50 L548 34 L610 64 L690 22 L744 56 L820 38 L880 68 L960 44 L1010 62 L1090 26 L1150 60 L1200 48" />
     </svg>
     <div class="foot">
       <div class="brand">
@@ -43,5 +43,6 @@ import { pages, footerNav } from '../data/pages';
       <span>© 2026 Hult Prize Nepal. EF, Hult Prize and related marks belong to their owners.</span>
       <span>Global figures: EF Hult Prize 2026 season. Nepal figures: Hult Prize Nepal 2025–26 qualifiers report.</span>
     </div>
+    <div class="wordmark" aria-hidden="true">Hult Prize Nepal</div>
   </div>
 </footer>

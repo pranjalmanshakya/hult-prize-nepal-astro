@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "brand-assets": "node scripts/make-brand-assets.mjs"
+    "brand-assets": "node scripts/make-brand-assets.mjs",
+    "upscale-photos": "node scripts/upscale-photos.mjs"
   },
   "dependencies": {
     "@fontsource-variable/figtree": "^5.3.0",

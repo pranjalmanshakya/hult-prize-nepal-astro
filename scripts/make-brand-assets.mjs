@@ -10,6 +10,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import sharp from 'sharp';
 import { allPages } from '../src/data/pages.ts';
+import { backdrops } from '../src/data/backdrops.ts';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const at = (...p) => path.join(root, ...p);
@@ -17,7 +18,7 @@ const font = (dir, file) => at('node_modules/@expo-google-fonts/figtree', dir, f
 const FONT_BLACK = font('900Black', 'Figtree_900Black.ttf');
 const FONT_BOLD = font('700Bold', 'Figtree_700Bold.ttf');
 
-const INK = '#150007', HERITAGE = '#FF3298', PURPLE = '#8A2890', SUN = '#FDD40E';
+const INK = '#150007', MIDNIGHT = '#292563', HERITAGE = '#FF3298', SUN = '#FDD40E';
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 /** Render text with Figtree, shrinking it if it would be wider than maxWidth. */
@@ -65,11 +66,11 @@ function ico(pngs) {
 /* ---------- Share images (1200 x 630) ---------- */
 async function shareImage(page) {
   const W = 1200, H = 630, M = 72;
-  // Ink panel with the logo arch in the City Pop gradient, bottom right.
+  // Midnight panel with the logo arch in the Tropical Volcano gradient, bottom right.
   const aw = 300, ah = 330, ax = W - M - aw, ay = H - ah;
   const bg = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
-    <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${HERITAGE}"/><stop offset="1" stop-color="${PURPLE}"/></linearGradient></defs>
-    <rect width="${W}" height="${H}" fill="${INK}"/>
+    <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${SUN}"/><stop offset="1" stop-color="${HERITAGE}"/></linearGradient></defs>
+    <rect width="${W}" height="${H}" fill="${MIDNIGHT}"/>
     <path fill="url(#g)" d="M${ax} ${ay} H${ax + aw} V${ay + ah * 0.06} A${aw * 0.56} ${ah * 0.94} 0 0 0 ${ax + aw * 0.44} ${ay + ah} H${ax} Z"/>
   </svg>`);
   const logo = await sharp(at('src/assets/brand/logo-mark-light.png')).resize({ height: 84 }).png().toBuffer();
@@ -92,6 +93,20 @@ await writeFile(at('public/apple-touch-icon.png'), await icon(180, { radius: 0 }
 // safe zone, so Android can crop them to a circle or squircle without cutting it.
 await writeFile(at('public/icon-maskable-192.png'), await icon(192, { pad: 0.28, radius: 0 }));
 await writeFile(at('public/icon-maskable-512.png'), await icon(512, { pad: 0.28, radius: 0 }));
+// Blurred page backgrounds. Heavy blur means a small file is enough: the
+// browser stretches it to fill the screen and nobody can tell.
+await mkdir(at('public/bg'), { recursive: true });
+for (const [slug, name] of Object.entries(backdrops)) {
+  const src = name === 'art-confetti' ? at('src/assets/brand/art-confetti.jpg') : at('src/assets/photos', `${name}.jpg`);
+  await sharp(src)
+    .resize(640, 400, { fit: 'cover' })
+    .blur(12)
+    .modulate({ saturation: 1.2 })
+    .jpeg({ quality: 70, mozjpeg: true })
+    .toFile(at('public/bg', `${slug}.jpg`));
+  console.log('backdrop:', slug);
+}
+
 for (const page of allPages) {
   await writeFile(at('public/og', `${page.slug}.png`), await shareImage(page));
   console.log('share image:', page.slug);

@@ -1,12 +1,13 @@
 ---
 import '@fontsource-variable/figtree/wght.css';
 import '../styles/global.css';
-import '../styles/glass.css';
+import '../styles/watermelon.css';
 import '../styles/motion.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import type { PageMeta } from '../data/pages';
 import { org } from '../data/site';
+import { backdropFor } from '../data/backdrops';
 import { organizationSchema, websiteSchema, breadcrumbSchema, webPageSchema, toJsonLd } from '../lib/schema';
 
 interface Props {
@@ -69,10 +70,11 @@ const graph = noindex
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
     <script type="application/ld+json" is:inline set:html={toJsonLd(graph)} />
-    <!-- Marks the page as script-enabled before first paint, so scroll reveals never flash. If the main script has not started within 3.5 seconds, everything is shown. -->
-    <script is:inline>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__reveal)document.documentElement.classList.remove('js')},3500);</script>
   </head>
   <body>
+    <!-- A blurred event photo behind the whole page (see src/data/backdrops.ts) -->
+    <div class="backdrop" style={`--bg:url(${backdropFor(page.slug)})`} aria-hidden="true"></div>
+    <div class="frame-lines" aria-hidden="true"></div>
     <a class="skip" href="#main">Skip to content</a>
     <Header />
     <main id="main"><slot /></main>
@@ -113,51 +115,81 @@ const graph = noindex
       addEventListener('appinstalled', () => { if (installBtn) installBtn.hidden = true; });
     </script>
     <script>
-      // Scroll reveals and count-up numbers. The selector list matches src/styles/motion.css.
-      const REVEAL = '.sec-head, .split > .stack, .card, .stat, .panel, .person, .champ, .timeline li, .steps li, .numbered li, .pipeline li, .link-card, .photo, .framed, .photo-row figure, .summit, .gallery button, .contact-card, .faq details, .dates > div, .benefit-list > div, .quote, .map, .hero-facts .wrap > div, .cta-band .wrap > *, .ridge';
-      const items = Array.from(document.querySelectorAll<HTMLElement>(REVEAL));
+      // ---- Scroll reveals and count-up numbers (styles in motion.css) ----
+      // Only items that start below the screen are hidden, and each is shown just
+      // before it scrolls into view, so nothing on screen ever blinks or waits.
+      const REVEAL = '.sec-head, .split > .stack, .card, .stat, .panel, .person, .champ, .timeline li, .steps li, .numbered li, .pipeline li, .link-card, .photo, .framed, .photo-row figure, .summit, .gallery button, .contact-card, .faq details, .dates > div, .benefit-list > div, .quote, .map, .cta-panel, .sdgs li, .ridge, .bento-card, .checks > li, .list > li, .chips > li';
       const still = matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window);
 
-      // Counts a figure such as "550+" or "2,200" up from zero. The real value is already in the HTML.
-      const countUp = (el: HTMLElement) => {
-        const m = (el.textContent ?? '').match(/^(\D*)(\d[\d,]*)(.*)$/);
-        if (!m) return;
-        const target = Number(m[2].replace(/,/g, ''));
-        if (target < 10) return;
-        const start = performance.now();
-        const step = (now: number) => {
-          const k = Math.min(1, (now - start) / 1500);
-          const eased = 1 - Math.pow(1 - k, 4);
-          el.textContent = m[1] + Math.round(target * eased).toLocaleString('en-US') + m[3];
-          if (k < 1) requestAnimationFrame(step);
-        };
-        requestAnimationFrame(step);
+      // Rolling-digit counter: each digit of a figure such as "550+" scrolls up into
+      // place, like a mechanical counter. The real value stays readable for screen
+      // readers, and the plain text is put back once the roll has finished.
+      const roll = (el: HTMLElement) => {
+        if (el.dataset.rolled) return;
+        el.dataset.rolled = '1';
+        const text = el.textContent ?? '';
+        if (!/\d/.test(text)) return;
+        let k = 0;
+        const parts = [...text].map((ch) => {
+          if (!/\d/.test(ch)) return '<span>' + ch + '</span>';
+          const strip = Array.from({ length: 10 }, (_, d) => '<span>' + d + '</span>').join('');
+          return '<span class="odo-d" style="--n:' + ch + ';--k:' + k++ + '"><span class="odo-s">' + strip + '</span></span>';
+        });
+        el.innerHTML = '<span class="sr-only">' + text + '</span><span class="odo" aria-hidden="true">' + parts.join('') + '</span>';
+        requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('run')));
+        setTimeout(() => { el.textContent = text; el.classList.remove('run'); }, 1700 + k * 90 + 300);
       };
+      const countIn = (root: Element) => root.querySelectorAll<HTMLElement>('.stat b, .fact-band b').forEach(roll);
 
-      if (still) {
-        items.forEach((el) => el.classList.add('in'));
-      } else {
+      if (!still) {
+        // Figures already on screen count up straight away.
+        document.querySelectorAll<HTMLElement>('.stat, .fact-band .wrap > div').forEach((el) => {
+          if (el.getBoundingClientRect().top < innerHeight) countIn(el);
+        });
+        // Lists already on screen when the page opens still come in one item at a time.
+        document.querySelectorAll<HTMLElement>('.checks > li, .list > li, .chips > li').forEach((el) => {
+          if (el.getBoundingClientRect().top > innerHeight) return;
+          const index = el.parentElement ? Array.prototype.indexOf.call(el.parentElement.children, el) : 0;
+          el.style.setProperty('--d', Math.min(index, 8) * 90 + 'ms');
+          el.classList.add('pop');
+        });
+        const below = Array.from(document.querySelectorAll<HTMLElement>(REVEAL)).filter((el) => el.getBoundingClientRect().top > innerHeight);
         const io = new IntersectionObserver((entries) => {
           for (const entry of entries) {
             if (!entry.isIntersecting) continue;
-            io.unobserve(entry.target);
-            reveal(entry.target as HTMLElement);
+            const el = entry.target as HTMLElement;
+            io.unobserve(el);
+            el.classList.add('in');
+            countIn(el);
+            // Once it has appeared, drop the reveal classes so the element's own hover effects apply again.
+            setTimeout(() => el.classList.remove('pre', 'in'), 1300);
           }
-        }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
-        const reveal = (el: HTMLElement) => {
-          el.classList.add('in');
-          if (el.matches('.stat, .hero-facts .wrap > div')) el.querySelectorAll<HTMLElement>('b').forEach(countUp);
-        };
-        for (const el of items) {
+        }, { rootMargin: '0px 0px 6% 0px' });
+        for (const el of below) {
           // Siblings appear one after another.
           const index = el.parentElement ? Array.prototype.indexOf.call(el.parentElement.children, el) : 0;
-          el.style.setProperty('--d', Math.min(index, 8) * 70 + 'ms');
-          // Anything already on screen is shown straight away; the rest waits for scroll.
-          if (el.getBoundingClientRect().top < innerHeight * 0.95) reveal(el);
-          else io.observe(el);
+          el.style.setProperty('--d', Math.min(index, 6) * (el.matches('li') ? 100 : 60) + 'ms');
+          el.classList.add('pre');
+          io.observe(el);
         }
+        // A fast jump down the page (End key, scrollbar drag, a link to a section) can skip
+        // past items without them ever crossing the screen. Show anything already above
+        // the screen straight away, without animation.
+        let ticking = false;
+        addEventListener('scroll', () => {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(() => {
+            ticking = false;
+            document.querySelectorAll<HTMLElement>('.pre:not(.in)').forEach((el) => {
+              if (el.getBoundingClientRect().bottom > 0) return;
+              io.unobserve(el);
+              el.classList.remove('pre');
+              countIn(el);
+            });
+          });
+        }, { passive: true });
       }
-      (window as unknown as { __reveal: boolean }).__reveal = true;
     </script>
   </body>
 </html>

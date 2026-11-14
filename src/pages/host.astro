@@ -4,6 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import Explore from '../components/Explore.astro';
 import { cdRole, season, team } from '../data/site';
 import { pages } from '../data/pages';
+import { gmailCompose } from '../lib/mail';
 const nc = team[0];
 const steps = [
   ['Express interest', 'Contact the national team and we set up a short orientation call.'],
@@ -34,8 +35,8 @@ const forUniversity = [
   <PageHero page={pages.host} facts={[`Register by ${season.cdDeadline}`, 'Committee of 8 to 15 students', `Finale before ${season.qualifiersCloseLabel}`]} arch="cotton" kicker="For colleges and universities" lead={`Hosting is light on staff time. Your students run the program, and Hult Prize Nepal trains and supports them at every step. Campus Director registration closes on ${season.cdDeadline}.`}>
     Bring the Hult Prize <em>to your campus</em>
     <Fragment slot="actions">
-      <a class="btn btn-primary" href={`mailto:${nc.email}?subject=Campus%20Director%202026-27`}>Email the National Coordinator</a>
-      <a class="btn btn-light" href={pages.contact.path}>All contacts</a>
+      <a class="btn btn-primary" href={gmailCompose(nc.email, 'Campus Director 2026-27')} target="_blank" rel="noopener">Email the National Coordinator <span aria-hidden="true">↗</span></a>
+      <a class="btn btn-line" href={pages.contact.path}>All contacts</a>
     </Fragment>
   </PageHero>
 

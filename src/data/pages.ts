@@ -46,8 +46,8 @@ export const pages = {
   compete: {
     slug: 'compete', path: '/compete/', label: 'Compete',
     title: 'How to Enter from Nepal' + suffix,
-    description: 'Who can enter the EF Hult Prize from Nepal, the two ways to qualify, the key dates for 2026–27 and the five stages from your campus to the Global Finals.',
-    blurb: 'Who can enter, the two ways in, key dates and the five stages.',
+    description: 'Enter the EF Hult Prize from Nepal: every team represents its campus at the qualifier level. Who can enter, how to qualify, key dates and the five stages.',
+    blurb: 'Represent your campus: who can enter, how to qualify and key dates.',
     share: ['How to enter', 'from Nepal'],
   },
   nepal: {
