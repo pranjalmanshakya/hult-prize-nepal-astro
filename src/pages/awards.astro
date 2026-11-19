@@ -1,0 +1,84 @@
+---
+// Awards, nominations and the honour roll for everyone who has led Hult Prize
+// Nepal: National Coordinators, National Community Coordinators, advisors,
+// Campus Directors and organizers. All content comes from src/data/site.ts.
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Explore from '../components/Explore.astro';
+import { honours, pastLeadership, pastCampusLeaders } from '../data/site';
+import { pages } from '../data/pages';
+
+const initials = (name: string) => name.split(' ').filter((_, i, a) => i === 0 || i === a.length - 1).map((w) => w[0]).join('');
+
+// Awards grouped by season, winners first.
+const awardSeasons = [...new Set(honours.map((h) => h.season))].map((season) => ({
+  season,
+  items: honours.filter((h) => h.season === season).sort((a, b) => (a.result === b.result ? 0 : a.result === 'Winner' ? -1 : 1)),
+}));
+
+// Honour roll: national leadership plus campus leaders, grouped by season.
+type RollEntry = { name: string; role: string; campus?: string };
+const roll = new Map<string, RollEntry[]>();
+for (const s of pastLeadership) roll.set(s.season, s.people.map(([name, role]) => ({ name, role })));
+for (const p of pastCampusLeaders) roll.set(p.season, [...(roll.get(p.season) ?? []), { name: p.name, role: p.role, campus: p.campus }]);
+const people = new Set([...roll.values()].flat().map((p) => p.name)).size;
+---
+<Base page={pages.awards}>
+  <PageHero page={pages.awards} arch="volcano" kicker="Recognition" facts={[`${people} past national leaders`, 'National and campus roles']} lead="Hult Prize Nepal exists because of the people who ran it: National Coordinators, Community Coordinators, Campus Directors and the organizers in between. This page honours them.">
+    Awards and <em>honours</em>
+  </PageHero>
+
+  {awardSeasons.length > 0 && (
+    <section class="sec">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="kicker">Awards and nominations</span>
+          <h2 class="h2">Recognised for <em>outstanding work</em></h2>
+        </div>
+        {awardSeasons.map((group) => (
+          <div class="award-season">
+            <h3 class="h3">{group.season}</h3>
+            <div class="grid g3">
+              {group.items.map((h) => (
+                <article class={`card award ${h.result === 'Winner' ? 'won' : 'nominated'}`}>
+                  <span class="award-result">{h.result}</span>
+                  <span class="eyebrow">{h.award}</span>
+                  <h4>{h.name}</h4>
+                  <p>{h.role}{h.campus ? `, ${h.campus}` : ''}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Honour roll</span>
+        <h2 class="h2">The people who <em>led the way</em></h2>
+        <p class="lead">Everyone who has held a national leadership role in Hult Prize Nepal, season by season.</p>
+      </div>
+      {[...roll.entries()].map(([season, entries]) => (
+        <div class="award-season">
+          <h3 class="h3">{season}</h3>
+          <div class="grid g3">
+            {entries.map((p) => (
+              <article class="card honour">
+                <span class="mono c-midnight" aria-hidden="true">{initials(p.name)}</span>
+                <div>
+                  <h4>{p.name}</h4>
+                  <p>{p.role}{p.campus ? `, ${p.campus}` : ''}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <Explore keys={['team', 'champions', 'nepal']} soft />
+</Base>
