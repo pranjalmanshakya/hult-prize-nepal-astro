@@ -93,6 +93,24 @@ export function teamSchema(site: URL) {
   }));
 }
 
+/** The National Competition as a schema.org Event, so search engines can show its dates. */
+export function nationalsEventSchema(site: URL) {
+  return {
+    '@type': 'Event',
+    '@id': abs(site, '/nationals/#event'),
+    name: 'Hult Prize Nepal National Competition 2027',
+    description: `The two-day Hult Prize Nepal National Competition, ${season.nationalsDays}. Qualified teams from campuses across Nepal pitch for the chance to represent Nepal in the EF Hult Prize.`,
+    startDate: season.nationalsStart,
+    endDate: season.nationalsEnd,
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: { '@type': 'Place', name: 'Nepal', address: { '@type': 'PostalAddress', addressCountry: org.country } },
+    image: abs(site, '/og/nationals.png'),
+    url: abs(site, '/nationals/'),
+    organizer: { '@id': orgId(site) },
+  };
+}
+
 /** Serialise for a <script type="application/ld+json"> tag without letting content close the tag. */
 export const toJsonLd = (graph: unknown[]) =>
   JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c');

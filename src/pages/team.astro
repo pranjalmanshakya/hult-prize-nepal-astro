@@ -54,6 +54,7 @@ const roles = [
       <div class="sec-head">
         <span class="kicker">Before this season</span>
         <h2 class="h2">Previous national leadership</h2>
+        <p class="lead">Every past leader is on the <a class="text-link" href={pages.awards.path}>awards and honours</a> page, with the awards and nominations they received.</p>
       </div>
       <div class="grid g2">
         {pastLeadership.map((s) => (
@@ -69,5 +70,5 @@ const roles = [
     </div>
   </section>
 
-  <Explore keys={['contact', 'nepal', 'champions']} soft />
+  <Explore keys={['awards', 'contact', 'champions']} soft />
 </Base>

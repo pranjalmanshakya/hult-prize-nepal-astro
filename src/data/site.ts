@@ -4,7 +4,11 @@
 export const season = {
   name: '2026–27',
   challenge: 'Unlimited',
-  nationals: 'Last week of April 2027',
+  // Nepal National Competition: a two-day event.
+  nationals: '22–23 April 2027',
+  nationalsDays: 'Thursday 22 and Friday 23 April 2027',
+  nationalsStart: '2027-04-22',
+  nationalsEnd: '2027-04-23',
   // Qualifier rounds must finish before 15 February 2027 (countdown ends at the close of 14 Feb, Nepal time)
   qualifiersClose: '2027-02-14T23:59:59+05:45',
   qualifiersCloseLabel: '15 February 2027',
@@ -91,7 +95,7 @@ export const sdgs = [
 
 export const journey = [
   { n: '01', when: 'Sep 2026 – before 15 Feb 2027', title: 'Campus qualifiers', text: "Earn the right to represent your campus: win your college's OnCampus Program, or, if your college has none, apply for it through the Open Application and pass two online reviews.", now: true },
-  { n: '02', when: 'Last week of April 2027', title: 'Nepal Nationals', text: 'Qualified teams from across Nepal pitch at the National Competition. The winner represents Nepal.' },
+  { n: '02', when: '22–23 April 2027', title: 'Nepal Nationals', text: 'Over two days, qualified teams from across Nepal pitch at the National Competition. The winner represents Nepal.' },
   { n: '03', when: 'Jun – Jul 2027', title: 'Digital Incubator', text: 'National winners and top online applicants get world-class mentors to validate their market and build a proof of concept.' },
   { n: '04', when: 'Aug 2027', title: 'Global Accelerator', text: 'Selected teams spend a month of intensive mentoring at Ashridge House, outside London.' },
   { n: '05', when: 'Sep 2027', title: 'Global Finals', text: "The world's top student startups pitch for US$1,000,000 in seed funding." },
@@ -105,7 +109,7 @@ export const story = [
   { y: '2024', h: 'Nepal at the regional summit', t: "Kagaji Duniya from Little Angels' College of Management, which makes products from waste paper with workers with disabilities, is selected for the regional summit in Bangkok." },
   { y: 'May 2025', big: true, h: 'National Competition, AITM College', t: '48 teams and 148 students in Lalitpur, with AIESEC Nepal. Champion: Team Vayudristi, Saraswati Multiple Campus.' },
   { y: 'May 2026', big: true, h: "National Competition, St. Xavier's Jawalakhel", t: 'Presented by British Council Nepal: 46 teams, 160+ students from 45+ colleges, 14 judges. Champion: Team Fluxelle, Khwopa College of Engineering.' },
-  { y: '2026–27', h: 'The Unlimited season', t: 'A new national team, workshops on business models and pitching for qualified teams, and Nationals in the last week of April 2027.' },
+  { y: '2026–27', h: 'The Unlimited season', t: 'A new national team, workshops on business models and pitching for qualified teams, and a two-day National Competition on 22–23 April 2027.' },
 ];
 
 export const team = [
@@ -202,6 +206,21 @@ export const sources: [string, string][] = [
   ['B360: VAC wins at Purwanchal Campus (2022)', 'https://b360nepal.com/vac-bags-hult-prize-at-purwanchal-campus-with-job-search-portal-ideas/'],
 ];
 
+// ---------------------------------------------------------------------------
+// Awards and nominations (shown on /awards/).
+// One entry per award or nomination. The section stays hidden until there is at
+// least one entry. Example:
+// { season: '2026 season', award: 'Outstanding National Coordinator', name: 'Full Name',
+//   role: 'National Coordinator', result: 'Winner' }
+// For a Campus Director, add the college: campus: 'College name'.
+export interface Honour { season: string; award: string; name: string; role: string; campus?: string; result: 'Winner' | 'Nominee'; }
+export const honours: Honour[] = [];
+
+// Honour roll: everyone who has served in a national or campus leadership role,
+// by season. Past national leadership comes from pastLeadership above; add past
+// Campus Directors and other organizers here.
+export const pastCampusLeaders: { season: string; name: string; role: string; campus?: string }[] = [];
+
 // Campus Directors 2026–27: not yet appointed. Add people here once announced:
 // { name: 'Full Name', campus: 'College name', photo: 'file-name-in-assets-photos' }
 export const campusDirectors: { name: string; campus: string; photo?: string }[] = [];
@@ -212,7 +231,7 @@ export const cdRole = [
   ['Work with the college', 'Be the link to administration and a faculty supporter.'],
   ['Build the startups', 'Recruit teams from every department and connect them with mentors.'],
   ['Represent the campus', 'Join a national network of Campus Directors from 40+ campuses.'],
-  ['Send a team to Nationals', 'Your winning team pitches at the National Competition in April 2027.'],
+  ['Send a team to Nationals', 'Your winning team pitches at the two-day National Competition on 22–23 April 2027.'],
 ];
 
 export const workshops = [
