@@ -12,7 +12,6 @@ export const backdrops: Record<string, string> = {
   nepal: 'event-hall',
   team: 'hpn-team',
   champions: 'g-trophy',
-  awards: 'global-celebrate',
   campuses: 'g-group',
   host: 'event-speaker',
   nationals: 'event-panelists',

@@ -4,8 +4,6 @@ import PageHero from '../components/PageHero.astro';
 import Explore from '../components/Explore.astro';
 import { workshops, season } from '../data/site';
 import { pages } from '../data/pages';
-import { googleCalendarLink } from '../lib/calendar';
-import { nationalsEventSchema } from '../lib/schema';
 const stats = [
   ['45+', 'colleges across Nepal', 'c-heritage'],
   ['50', 'student-led startups', 'c-sun'],
@@ -19,28 +17,10 @@ const pipe = [
   ['Digital Incubator & beyond', "Nepal's winner joins the Hult Prize Digital Incubator on the road to the Global Finals."],
 ];
 ---
-<Base page={pages.nationals} schema={[nationalsEventSchema(Astro.site!)]}>
-  <PageHero page={pages.nationals} facts={[season.nationals, 'Two-day event', '45+ colleges', '20+ judges']} arch="volcano" kicker={`The next stage · ${season.nationals}`} lead="Winning teams from OnCampus Programs across the country compete over two days for Nepal's place in the Digital Incubator.">
+<Base page={pages.nationals}>
+  <PageHero page={pages.nationals} facts={[season.nationals, '45+ colleges', '20+ judges']} arch="volcano" kicker={`The next stage · ${season.nationals}`} lead="Winning teams from OnCampus Programs across the country compete for Nepal's place in the Digital Incubator.">
     National Competition <em>2027</em>
   </PageHero>
-
-  <section class="sec tight">
-    <div class="wrap">
-      <div class="event-days">
-        <div class="day"><span>Day 1</span><b>22</b><em>Thursday</em><small>April 2027</small></div>
-        <div class="day"><span>Day 2</span><b>23</b><em>Friday</em><small>April 2027</small></div>
-        <div class="stack">
-          <span class="kicker">Save the dates</span>
-          <h2 class="h2">Two days of <em>Nationals</em></h2>
-          <p class="lead">The Hult Prize Nepal National Competition runs over two days, {season.nationalsDays}.</p>
-          <div class="btn-row">
-            <a class="btn btn-primary" href={googleCalendarLink()} target="_blank" rel="noopener">Add to Google Calendar <span aria-hidden="true">↗</span></a>
-            <a class="btn btn-line" href="/nationals-2027.ics" download>Download calendar file</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section class="sec">
     <div class="wrap split top">

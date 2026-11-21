@@ -64,13 +64,6 @@ export const pages = {
     blurb: 'The people leading Hult Prize Nepal this season.',
     share: ['Meet the 2027', 'national team'],
   },
-  awards: {
-    slug: 'awards', path: '/awards/', label: 'Awards',
-    title: 'Awards and Honours' + suffix,
-    description: 'Awards, nominations and an honour roll for the National Coordinators, Community Coordinators, Campus Directors and organizers of Hult Prize Nepal.',
-    blurb: 'Recognising the leaders who built Hult Prize in Nepal.',
-    share: ['Awards and', 'honours'],
-  },
   champions: {
     slug: 'champions', path: '/champions/', label: 'Champions',
     title: 'National Champions' + suffix,
@@ -95,9 +88,9 @@ export const pages = {
   nationals: {
     slug: 'nationals', path: '/nationals/', label: 'Nationals',
     title: 'National Competition 2027' + suffix,
-    description: 'The Hult Prize Nepal National Competition is a two-day event on 22–23 April 2027. See who qualifies, the workshops before it and what the winner gets.',
+    description: 'The Hult Prize Nepal National Competition takes place in the last week of April 2027. See who qualifies, the workshops before it and what the winner gets.',
     blurb: 'Who qualifies, the workshops before it and what comes after.',
-    share: ['National Competition', '22–23 April 2027'],
+    share: ['National Competition', 'April 2027'],
   },
   partners: {
     slug: 'partners', path: '/partners/', label: 'Partners',
@@ -151,7 +144,7 @@ export const primaryNav: PageKey[] = ['about', 'challenge', 'compete', 'nepal', 
 /** Footer columns. */
 export const footerNav: { heading: string; keys: PageKey[] }[] = [
   { heading: 'Compete', keys: ['challenge', 'compete', 'nationals', 'faq'] },
-  { heading: 'Hult Prize Nepal', keys: ['about', 'nepal', 'team', 'awards', 'champions', 'gallery'] },
+  { heading: 'Hult Prize Nepal', keys: ['about', 'nepal', 'team', 'champions', 'gallery'] },
   { heading: 'Get involved', keys: ['campuses', 'host', 'partners', 'contact'] },
 ];
 
